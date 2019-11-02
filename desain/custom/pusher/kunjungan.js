@@ -51,8 +51,8 @@
     '<td>'+data.jam_daftar+'</td>'+
     '<td>'+jk+'</td>'+
     '<td class="periksa">'+
-    '<a href="#">'+
-    '<button disabled type="button" class="btn btn-primary btn-sm periksa">'+
+    '<a href="'+data.url+'">'+
+    '<button type="button" class="btn btn-primary btn-sm periksa">'+
     '<i class="fa fa-medkit"></i> Periksa'+
     '</button>'+
     '</a>'+
@@ -65,17 +65,9 @@
     '</tr>';
     var user = $("#user_jabatan").val();
     if (kode_tupel==poli || user=="kasir") {
-      if (user=='dobg' || user=='dint' || user=='dumu' || user=='dgig' || user=='dozo' || user=='dugd') {
-        var audio = new Audio('http://utamahusada.esolusindo.com/desain/assets/custom/qr_reader/audio/notif.mp3');
-        audio.play();
-
-        $(".tabel_belum_periksa_"+data.pegawai_NIK).append(html);
-      }else{
-        var audio = new Audio('http://utamahusada.esolusindo.com/desain/assets/custom/qr_reader/audio/notif.mp3');
-        audio.play();
-
-        $("#tabel_belum_periksa").append(html);
-      }
+      var audio = new Audio('http://utamahusada.esolusindo.com/desain/assets/custom/qr_reader/audio/notif.mp3');
+      audio.play();
+      $("#tabel_belum_periksa").append(html);
       // $("#tabel_belum_periksa").dataTable();
       var total = parseInt($(".total_billing").text());
       total +=1;

@@ -256,28 +256,60 @@ class Obat extends CI_Controller{
   //   echo "Selesai";
   // }
 
-  public function update_stok(){
-    $data = $this->db
-    ->select("SUM(jumlah_beri) as jumlah_pakai,detail_pembelian_obat.obat_idobat as idobat")
-    ->group_by("detail_pembelian_obat.obat_idobat")
-    // ->where("detail_pembelian_obat.obat_idobat","TBL0055")
-    ->join("detail_pembelian_obat","detail_pembelian_obat.iddetail_pembelian_obat=detail_resep_diberikan.id_pengadaan")
-    ->get("detail_resep_diberikan")
-    ->result();
+  // public function update_stok(){
+  //   $data = $this->db
+  //   ->select("SUM(jumlah_beri) as jumlah_pakai,detail_pembelian_obat.obat_idobat as idobat")
+  //   ->group_by("detail_pembelian_obat.obat_idobat")
+  //   // ->where("detail_pembelian_obat.obat_idobat","TBL0055")
+  //   ->join("detail_pembelian_obat","detail_pembelian_obat.iddetail_pembelian_obat=detail_resep_diberikan.id_pengadaan")
+  //   ->get("detail_resep_diberikan")
+  //   ->result();
+  //   foreach ($data as $value) {
+  //     $data2 = $this->db
+  //     ->select("SUM(jumlah_satuan_kecil) as pengadaan")
+  //     ->get_where("detail_pembelian_obat",array("obat_idobat"=>$value->idobat))->row_array();
+  //     $stok = $data2['pengadaan']-$value->jumlah_pakai;
+  //     // die(var_dump($stok));
+  //     $this->db->where("idobat",$value->idobat);
+  //     $this->db->update("obat",array("stok"=>$stok));
+  //
+  //   }
+  //   // die(var_dump($data2));
+  //   echo "Selesai";
+  // }
+  public function set_harga(){
+    $data = $this->db->get("obat_p")->result();
     foreach ($data as $value) {
-      $data2 = $this->db
-      ->select("SUM(jumlah_satuan_kecil) as pengadaan")
-      ->get_where("detail_pembelian_obat",array("obat_idobat"=>$value->idobat))->row_array();
-      $stok = $data2['pengadaan']-$value->jumlah_pakai;
-      // die(var_dump($stok));
-      $this->db->where("idobat",$value->idobat);
-      $this->db->update("obat",array("stok"=>$stok));
+      $up = array(
+        'harga_1' => $value->rajal,
+        'harga_2' => $value->ranap_1,
+        'harga_3' => $value->ranap_2,
+        'harga_4' => $value->ranap_3,
+        'harga_5' => $value->vip,
+        'harga_ozon' => $value->ozon
+      );
 
+      $this->db->where("idobat",$value->idobat)
+      ->update("obat",$up);
     }
-    // die(var_dump($data2));
     echo "Selesai";
   }
 
+  public function opname(){
+    $data = $this->db
+    ->select("SUM(stok) as stok, idobat")
+    ->group_by("idobat")
+    ->get("list_batch")->result();
+    foreach ($data as $value) {
+      $dataku = array(
+        'stok_berjalan' => $value->stok,
+        'stok' => $value->stok
+      );
+      $this->db->where("idobat",$value->idobat);
+      $this->db->update("obat",$dataku);
+    }
+    echo "selesai";
+  }
 
 }
 ?>

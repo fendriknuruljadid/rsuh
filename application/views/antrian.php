@@ -61,20 +61,6 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id_login'])) {
 
   <!-- <script src="<?php echo base_url()?>desain/custom/jSignature/libs/modernizr.js"></script> -->
   <script src="<?php echo base_url(); ?>desain/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
-  <style>
-    #utama{
-      /* background-color: black; */
-      color:white;
-      /* background: url("https://www.technocrazed.com/wp-content/uploads/2015/12/Blue-Wallpaper-For-Background-5.jpg"); */
-    }
-    .wrap-antrian{
-      border-radius:10px;
-      padding: 10px;
-    }
-    .atas{
-      color:white;
-    }
-  </style>
 </head>
 
 <body class="skin-megna fixed-layout">
@@ -114,14 +100,6 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id_login'])) {
         <span class="hidden-xs"><span class="font-bold">Utama</span>Husada</span>
       </a>
     </div>
-    <div class="col-md-8 pengumuman atas">
-        <marquee><h5 style="font-size:20px;">Ini Pengumuman</h5></marquee>
-
-    </div>
-    <div class="col-md-4 atas">
-      <h5><?php echo date("d/m/Y")."  <span class='jam'>".date("H:i:s")."</span>";?></h4>
-      <input type="hidden" value="<?php echo date("H:i:s")?>" id="input_jam">
-    </div>
     <!-- ============================================================== -->
     <!-- End Logo -->
     <!-- ============================================================== -->
@@ -138,80 +116,33 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id_login'])) {
 </nav>
 
 </header>
-<div class="page-wrapper" id="utama" style="margin-left:0px;padding-left:50px;">
+<div class="page-wrapper" style="margin-left:0px;padding-left:50px;">
   <div class="row mt-3">
-    <div class="col-md-4" style="min-height:350px;">
-      <div class="col-md-12 light-blue accent-4 wrap-antrian" style="width:100%;height: 100%;">
-        <div class="col-md-12 light-blue accent-4 wrap-antrian" style="height:100%">
-          <center><h2>Antrian Saat Ini</h2></center>
-          <hr style="background-color:white;"></hr>
-        <center><h1 style="font-size:150px;font-family:Consolas;" class="antrian_akhir"><?php echo $antrian['antrian_terakhir']==null?"--":$antrian['antrian_terakhir']?></h1></center>
-        <hr style="background-color:white;"></hr>
-        <center><h2 style="font-family:Consolas;" class="lokasi_akhir"><?php echo $antrian['unit_terakhir']==null?"--":$antrian['unit_terakhir']?></h2></center>
-        </div>
-      </div>
-    </div>
+    <div class="col-md-4 blue-gradient" style="padding-top: 100px;min-height:500px;color:white;"><center><h1 class="mt-2">Antrian Loket 1</h1></center><center><h1 style="font-size:150px;font-family:Consolas;" class="antrian_loket1"><?php echo str_pad($antrian['LOKET1'],3,"0",STR_PAD_LEFT)?></h1></center></div>
+    <div class="col-md-4 blue-gradient" style="padding-top: 100px;min-height:500px;color:white;"><center><h1 class="mt-2">Antrian Loket 2</h1></center><center><h1 style="font-size:150px;font-family:Consolas;" class="antrian_loket2"><?php echo str_pad($antrian['LOKET2'],3,"0",STR_PAD_LEFT)?></h1></center></div>
 
-    <div class="col-md-8" style="min-height:350px;">
-      <div class="col-md-12 blue-gradient wrap-antrian" style="height:100%;">
-        <iframe width="100%" height="350" src="https://www.youtube.com/embed/96ZPwmtjpJQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="col-md-4" style="padding-left:20px;color:white;text-align:right;">
+      <div class="row col-md-12 purple-gradient">
+      <center><h1 class="antrian_poliumum" style="margin-left:10px;font-size:65px;font-family:Consolas;"><?php echo str_pad($antrian['UMU'],3,"0",STR_PAD_LEFT)?></h1></center>
+      <p style="font-size:20px;margin-left:30px">Poli Umum</p>
+      </div>
+      <div class="row col-md-12 purple-gradient mt-3">
+      <center><h1 class="antrian_poliozon" style="margin-left:10px;font-size:65px;font-family:Consolas;"><?php echo str_pad($antrian['OZO'],3,"0",STR_PAD_LEFT)?></h1></center>
+      <p style="font-size:20px;margin-left:30px">Poli Ozon</p>
+      </div>
+      <div class="row col-md-12 purple-gradient mt-3">
+      <center><h1 class="antrian_poliobgyn" style="margin-left:10px;font-size:65px;font-family:Consolas;"><?php echo str_pad($antrian['OBG'],3,"0",STR_PAD_LEFT)?></h1></center>
+      <p style="font-size:20px;margin-left:30px">Poli Obgyn</p>
+      </div>
+      <div class="row col-md-12 purple-gradient mt-3">
+      <center><h1 class="antrian_poliinternis" style="margin-left:10px;font-size:65px;font-family:Consolas;"><?php echo str_pad($antrian['INTERNIS'],3,"0",STR_PAD_LEFT)?></h1></center>
+      <p style="font-size:20px;margin-left:30px">Poli Internis</p>
+      </div>
+      <div class="row col-md-12 purple-gradient mt-3">
+      <h1 class="antrian_poligigi" style="margin-left:10px;text-align: right;font-size:65px;font-family:Consolas;"><?php echo str_pad($antrian['GIG'],3,"0",STR_PAD_LEFT)?></h1>
+      <p style="font-size:20px;margin-left:30px;text-align:right">Poli Gigi</p>
       </div>
     </div>
-    <div class="col-md-2" style="min-height:150px;margin-top:10px;margin-bottom:10px">
-      <div class="col-md-12 purple-gradient wrap-antrian" style="height:100%">
-        <center><h4>Antrian</h4></center>
-        <hr style="background-color:white;"></hr>
-        <center><h1 style="font-size:30px;font-family:Consolas;" class="antrian_umum"><?php echo $antrian['UMU']==null?"--":$antrian['UMU']?></h1></center>
-        <hr style="background-color:white;"></hr>
-        <center><h4 style="font-family:Consolas;">Poli Umum</h4></center>
-      </div>
-    </div>
-    <div class="col-md-2" style="min-height:150px;margin-top:10px ;margin-bottom:10px ">
-      <div class="col-md-12 peach-gradient wrap-antrian" style="height:100%">
-        <center><h4>Antrian</h4></center>
-        <hr style="background-color:white;"></hr>
-        <center><h1 style="font-size:30px;font-family:Consolas;" class="antrian_ozon"><?php echo $antrian['OZO']==null?"--":$antrian['OZO']?></h1></center>
-        <hr style="background-color:white;"></hr>
-        <center><h4 style="font-family:Consolas;">Poli Ozon</h4></center>
-      </div>
-    </div>
-    <div class="col-md-2" style="min-height:150px;margin-top:10px;margin-bottom:10px">
-      <div class="col-md-12 blue-gradient wrap-antrian" style="height:100%">
-        <center><h4>Antrian</h4></center>
-        <hr style="background-color:white;"></hr>
-        <center><h1 style="font-size:30px;font-family:Consolas;" class="antrian_gigi"><?php echo $antrian['GIG']==null?"--":$antrian['GIG']?></h1></center>
-        <hr style="background-color:white;"></hr>
-        <center><h4 style="font-family:Consolas;">Poli Gigi</h4></center>
-      </div>
-    </div>
-    <div class="col-md-2" style="min-height:150px;margin-top:10px;margin-bottom:10px">
-      <div class="col-md-12 aqua-gradient wrap-antrian" style="height:100%">
-        <center><h4>Antrian</h4></center>
-        <hr style="background-color:white;"></hr>
-        <center><h1 style="font-size:30px;font-family:Consolas;" class="antrian_obgyn"><?php echo $antrian['OBG']==null?"--":$antrian['OBG']?></h1></center>
-        <hr style="background-color:white;"></hr>
-        <center><h4 style="font-family:Consolas;">Poli Obgyn</h4></center>
-      </div>
-    </div>
-    <div class="col-md-2" style="min-height:150px;margin-top:10px;margin-bottom:10px">
-      <div class="col-md-12 purple-gradient wrap-antrian" style="height:100%">
-        <center><h4>Antrian</h4></center>
-        <hr style="background-color:white;"></hr>
-        <center><h1 style="font-size:30px;font-family:Consolas;" class="antrian_internis"><?php echo $antrian['INTERNIS']==null?"--":$antrian['INTERNIS']?></h1></center>
-        <hr style="background-color:white;"></hr>
-        <center><h4 style="font-family:Consolas;">Poli Internis</h4></center>
-      </div>
-    </div>
-    <div class="col-md-2" style="min-height:150px;margin-top:10px;margin-bottom:10px">
-      <div class="col-md-12 aqua-gradient wrap-antrian" style="height:100%">
-        <center><h4>Antrian</h4></center>
-        <hr style="background-color:white;"></hr>
-        <center><h1 style="font-size:30px;font-family:Consolas;" class="antrian_laborat"><?php echo $antrian['UMU']==null?"--":$antrian['UMU']?></h1></center>
-        <hr style="background-color:white;"></hr>
-        <center><h4 style="font-family:Consolas;">Laboratorium</h4></center>
-      </div>
-    </div>
-
   </div>
 </div>
 <!-- ============================================================== -->
@@ -234,7 +165,7 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id_login'])) {
 <!-- ============================================================== -->
 <!-- footer -->
 <!-- ============================================================== -->
-<footer class="footer" style="margin-left:0px;" >
+<footer class="footer" style="margin-left:0px;">
   © 2018 E-SOLUSINDO
 </footer>
 <!-- ============================================================== -->

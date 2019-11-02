@@ -11,6 +11,7 @@ class Inventaris extends CI_Controller{
     $this->load->model('ModelUsers');
     $this->load->model('ModelInventaris');
     $this->load->model('ModelMbesar');
+    $this->load->model('ModelRuangan');
   }
 
   function index()
@@ -28,7 +29,8 @@ class Inventaris extends CI_Controller{
       'body'      => "Inventaris/input",
       'form' => "Inventaris/form2",
       'noinven' => $this->ModelInventaris->generate_noinven(),
-      'no_rek' => $this->ModelMbesar->get_data_mbesar()
+      'no_rek' => $this->ModelMbesar->get_data_mbesar(),
+      'ruangan' => $this->ModelRuangan->get_data()
     );
     $this->load->view('index', $data);
   }
@@ -45,7 +47,9 @@ class Inventaris extends CI_Controller{
       'no_rek' => $this->ModelMbesar->get_data_mbesar(),
       'inventaris' => $inventaris,
       'rekakun' => $rekakun,
-      'rekbiaya' => $rekbiaya
+      'rekbiaya' => $rekbiaya,
+
+      'ruangan' => $this->ModelRuangan->get_data()
     );
     $this->load->view('index', $data);
   }
@@ -112,6 +116,7 @@ class Inventaris extends CI_Controller{
       'rekakun'     => $this->input->post('rek_akuntansi'),
       'rekbiaya'    => $this->input->post('rek_susut'),
       'transaksi'   => $this->input->post('cara_bayar'),
+      'ruangan_idruangan' => $this->input->post('idruangan'),
     );
     $this->db->where('noinven', $id);
     $this->db->update('inventaris', $data);

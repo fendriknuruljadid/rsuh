@@ -23,6 +23,21 @@
     </div>
     <div class="row form-group">
             <div class="col col-md-3">
+              <label for="nama" class=" form-control-label">Poli</label>
+            </div>
+            <div class="col-12 col-md-9">
+              <select name="poli" id="pilih_jenis_pasien" class="mdb-select colorful-select dropdown-info sm-form">
+                <!-- <option value="" disabled selected>Pilih</option> -->
+                  <?php foreach ($tupel as $value): ?>
+                    <option id="<?php echo $value->kode_tupel;?>" value="<?php echo $value->kode_tupel;?>" <?php if (@$jasa_pelayanan['tujuan_pelayanan_kode_tupel']==$value->kode_tupel) {
+                      echo "selected";
+                    }?>><?php echo $value->tujuan_pelayanan;?></option>
+                  <?php endforeach; ?>
+              </select>
+            </div>
+    </div>
+    <div class="row form-group">
+            <div class="col col-md-3">
               <label for="hrg_1" class=" form-control-label">Harga (Rawat jalan)</label>
             </div>
             <div class="col-12 col-md-9">

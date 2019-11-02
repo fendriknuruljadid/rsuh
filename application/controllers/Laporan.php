@@ -271,8 +271,8 @@ class Laporan extends CI_Controller {
   public function get_laba(){
     $from = $this->input->post('tgl_mulai');
     $till = $this->input->post('tgl_sampai');
-    // $from = "2019-06-20";
-    // $till = "2019-06-30";
+    // $from = "2019-08-20";
+    // $till = "2019-08-30";
     $data = $this->ModelLaporan->get_laba_rugi($from,$till);
     echo json_encode($data);
   }

@@ -16,7 +16,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1"><i class="ti-calendar"></i></span>
                 </div>
-                <input type="date" name="tgl_mulai" value="<?php echo date("Y-m-d")?>" id="tgl" class="form-control" required>
+                <input type="date" name="tgl_mulai" id="tgl" value="<?php echo date("Y-m-d")?>" class="form-control" required>
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
                   <span class="input-group-text" id="basic-addon1"><i class="ti-calendar"></i></span>
                 </div>
                 <!-- <input type="text" name="noBPJS" id="noBPJS" class="form-control" placeholder="xxxxxxxxxxxxx" value="<?php echo @$pasien['noBPJS']; ?>"> -->
-                <input type="date" name="tgl_sampai" value="<?php echo date("Y-m-d")?>" id="tgl" class="form-control" required>
+                <input type="date" name="tgl_sampai" id="tgl" value="<?php echo date("Y-m-d")?>" class="form-control" required>
               </div>
             </div>
           </div>

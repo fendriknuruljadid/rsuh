@@ -13,9 +13,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h3><b>TAGIHAN</b> <span class="pull-right">#<?php echo $bayar_billing['kode_invoice']?></span></h3><span class="pull-right">NO : <?php echo $no?></span>
-                <p style="position:relative;right:10">Nomor Kunjungan <?php echo $data['no_urutkunjungan']?></p>
-
+                <h3><b>TAGIHAN</b> <span class="pull-right">#<?php echo $bayar_billing['kode_invoice']?></span></h3>
                 <hr>
                 <div class="row" id="form_tagihan">
                     <div class="col-md-12">
@@ -35,7 +33,7 @@
                         </div>
                         <div class="pull-right text-right">
                             <address>
-                              <p>Jember, <?php echo date('d-m-Y',strtotime($data['tgl']))?></p>
+                              <p>Jember, <?php echo date('d-m-Y')?></p>
                                 <h3>Kepada Yth,</h3>
                                 <h4 class="font-bold"><?php echo $pasien['namapasien']?></h4>
                                 <p class="text-muted m-l-30"><?php echo $pasien['alamat']?></p>
@@ -62,8 +60,31 @@
                                           <input type="text" name="hrg[]" value="<?php echo $billing['harga'];?>" hidden>
                                         </td>
                                         <td class="opsi">
+                                        <?php if($billing['opsi']=='resep'){?>
+                                          <a href="#" data-toggle="modal" data-target="#smallmodal">
+                                          <button id="" type="button" class="btn btn-primary btn-sm btn-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Pembayaran">
+                                            <i class="fa fa-edit"></i>
+                                          </button>
+                                          </a>
+                                        <?php
+                                      } if($billing['opsi']=='japel') {?>
+                                        <a href="#" data-toggle="modal" data-target="#japel">
+                                        <button id="" type="button" class="btn btn-primary btn-sm btn-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Pembayaran">
+                                          <i class="fa fa-edit"></i>
+                                        </button>
+                                        </a>
+                                      <?php
+                                    } if ($billing['opsi']=='lab') {?>
+                                      <a href="#" data-toggle="modal" data-target="#lab">
+                                      <button id="" type="button" class="btn btn-primary btn-sm btn-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Pembayaran">
+                                        <i class="fa fa-edit"></i>
+                                      </button>
+                                      </a>
+                                    <?php
+                                    }
 
-                                        </td>
+                                        ?>
+                                      </td>
                                     </tr>
                                     <?php
                                     $no++;
@@ -79,40 +100,56 @@
                             <table border="0">
                               <tr>
                                 <!-- <td>Total :</td><td><i>Rp</i></td><td> <?php echo number_format($total,2,",",".");?> <input type="text" name="total" value="<?php echo $total;?>" hidden ></td> -->
-                                <tr>
-                                  <!-- <td>PPN (10%):</td><td><i>Rp</i></td><td> <?php echo number_format($ppn,2,",",".")?> <input type="text" name="ppn" value="<?php echo $ppn;?>" hidden ></td> -->
-                                </tr>
-                                <tr><td >&nbsp;</td><td>&nbsp;</td></tr>
-                                <tr>
-                                  <td ><h3><b>Total Tagihan :</b></h3>
-                                  </td>
-                                  <td align="right"><h3><i>Rp.</i><?php echo number_format($total_billing,2,",",".");?></h3>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td ><h3><b>Deposit :</b></h3>
-                                  </td>
-                                    <td align="right"><h3><i>Rp.</i><?php echo number_format($deposit,2,",",".");?></h3>
-                                    </td>
-                                </tr>
-                                <tr>
-                                  <td ><h3><b>Total Harus Dibayar :</b></h3>
-                                  </td>
-                                  <td align="right"><h3><i>Rp.</i><?php echo number_format($total_akhir,2,",",".");?></h3>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td ><h6><i>( <?php echo $terbilang;?></i> )</h6></td><td></td>
-                                </tr>
-                              </table>
+                              <tr>
+                                <!-- <td>PPN (10%):</td><td><i>Rp</i></td><td> <?php echo number_format($ppn,2,",",".")?> <input type="text" name="ppn" value="<?php echo $ppn;?>" hidden ></td> -->
+                              </tr>
+                              <tr><td colspan="3">&nbsp;</td></tr>
+                              <tr>
+                                <td colspan="3"><h3><b>Total Tagihan :</b> <i>Rp</i> <?php echo number_format($total_billing,2,",",".");?></h3>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="3"><h6><i>( <?php echo $terbilang;?></i> )</h6></td>
+                              </tr>
+                              <!-- <tr>
+                                <td><h5><b>Pembayaran :</b><td> <i>Rp</i></td><h5></td><td><?php echo number_format($bayar_billing['jml_bayar'],2,",",".");?></td>
+                              </tr>
+                              <tr>
+                                <td><h5><b>Kembalian       :</b><td> <i>Rp</i></td></h5></td><td><?php echo number_format($bayar_billing['kembalian'],2,",",".");?></td>
+                              </tr> -->
+                            </table>
 
                               <input type="text" hidden name="id" value="<?php echo $this->uri->segment(3); ?>">
                               <input type="text" hidden name="bayar" id="billing" value="<?php echo $total_billing;?>">
 
                           </div>
+                          <!-- <table>
+                            <tr>
+                              </tr>
+                            <tr class="asuransi">
+                              <td>Asuransi - <?php echo @$jenis_pasien;?> :</td><td><i>Rp</i> <?php echo @$asuransi;?> <input type="text" name="asuransi" value="<?php echo @$asuransi;?>"></td>
+                            </tr>
+                            <tr class="diskon">
+                              <td>Diskon :</td><td><i>Rp</i><input type="text" name="diskon" value="<?php echo @$diskon;?>"></td>
+                            </tr>
+                            <tr>
+                              </tr>
+
+                          </table> -->
 
                         </div>
                     </div>
+                    <!-- <div class="col-md-12 bayar">
+                        <div class="pull-right m-t-30 text-right row">
+                            <hr>
+                            <div class="row col-12 text-right">
+                              <div class="col-md-7" style="top: 9px;"><h5><b>Pembayaran :</b> <i>Rp</i></h5></div> <div class="col-md-5"><h5><input name="jml_bayar" id="bayar" onkeyup="filter()" type="text" class="form-control money" ></h5></div>
+                              <div class="col-md-7" style="top: 9px;"><h5><b>Kembalian :</b> <i>Rp</i></h5></div> <div class="col-md-5"><h5><input name="kembalian" id="kembalian" type="text" class="form-control money" readonly></h5></div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                    </div> -->
                 </div>
                 <br><br><hr>
                 <div class="col-md-12" id="footer_tagihan" style="margin-top:20px;padding-left:50px;padding-right:50px;display:none;">
@@ -171,7 +208,7 @@
                                   <?php echo $value->jsmedis ?>
                                 </td>
                                 <td>
-                                  <?php echo $value->harga ?>
+                                  <?php echo "Rp.".number_format($value->harga) ?>
                                 </td>
                               </tr>
                             <?php endforeach; ?>
@@ -215,7 +252,7 @@
                                   <tr>
                                     <td><?php echo $value->kodelab; ?></td>
                                     <td><?php echo $value->nama; ?></td>
-                                    <td><?php echo $value->harga;?></td>
+                                    <td><?php echo "Rp.".number_format($value->harga);?></td>
                                   </tr>
                                 <?php endforeach; ?>
                               </tbody>
@@ -236,7 +273,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PrintArea/2.4.1/jquery.PrintArea.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url; ?>desain/dist/simple.money.format.js"></script>
 <?php
-$this->load->view('Billing/form_dialog');
+$this->load->view('Billing/form_dialog2');
 ?>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>desain/dist/simple.money.format.js"></script>

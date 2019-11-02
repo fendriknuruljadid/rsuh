@@ -111,7 +111,7 @@ $(function(){
     var option = "<select kode='"+kode+"' name='satuan_beli' class='mdb-select"+kode+" colorful-select dropdown-info sd-form pil_satuan'>"+res.satuan+"</select>";
     var markup = "<tr>" +
     "<td><input hidden value='"+ kode +"' name='id_obat[]'><input hidden value='' name='satuan[]' id='satuan"+kode+"'>"+ nama +"</td>" +
-    "<td><input type='text' name='no_batch[]' class='form-control'></td>" +
+    "<td><input required type='text' name='no_batch[]' class='form-control'></td>" +
     "<td><input type='date' name='ed[]' class='form-control'></td>" +
     "<td>"+option+"</td>" +
     "<td><input type='text' min='0' id='hrg"+kode+"' kode='"+kode+"' name='harga_beli[]' class='money"+kode+" form-control beli' value="+hrg_bl+" onkeydown='return alphaOnly(event);'></td>" +

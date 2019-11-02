@@ -679,7 +679,7 @@ class Billing extends CI_Controller{
       <td><h4><span class="badge badge-pill '.$warna.'">'.$value->tujuan_pelayanan.'</span></h4></td>
       <td>'.date("d-m-Y",strtotime($value->tgl)).'</td>
       <td>'.$value->jam_daftar.'</td>
-      <td>'.$value->inisial.''.$value->no_antrian.'</td>
+      <td>'.$type.''.$value->no_antrian.'</td>
       <td>'.$value->pasien_noRM.'</td>
       <td>'.$value->namapasien.'</td>
       <td>'.$s.'</td>

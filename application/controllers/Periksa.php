@@ -825,7 +825,7 @@ class Periksa extends CI_Controller{
     $kode = $this->ModelAkuntansi->generete_notrans();
     $nokun = $data_periksa['kunjungan_no_urutkunjungan'];
     $row = $this->db->get_where("resep",array("periksa_idperiksa"=>$periksa))->num_rows();
-      $daftar_obat      = $this->input->post('kode');
+    $daftar_obat      = $this->input->post('kode');
     if (empty($daftar_obat)) {
       $this->session->set_flashdata('notif', $this->Notif->gagal('Gagal membuat resep, obat tidak dipilih'));
       redirect(base_url()."Periksa/index/".$data_periksa['kunjungan_no_urutkunjungan']);
@@ -833,91 +833,89 @@ class Periksa extends CI_Controller{
       if ($row > 0) {
         $this->session->set_flashdata('notif', $this->Notif->gagal('Gagal,Resep telah dibuat sebelumnya'));
         redirect(base_url()."Periksa/index/".$data_periksa['kunjungan_no_urutkunjungan']);
-      }else{
-      $this->db->where('no_urutkunjungan',$data_periksa['kunjungan_no_urutkunjungan']);
-      $this->db->update('kunjungan',array('sudah'=>4));
-      $resep = array(
-        'tanggal'     => $tanggal,
-        'kode_dokter' => $kode_dokter,
-        'perawat1'    => $perawat1,
-        'perawat2'    => $perawat2,
-        'no_resep'    => $no_resep,
-        'periksa_idperiksa' => $periksa
+    }else{
+    $this->db->where('no_urutkunjungan',$data_periksa['kunjungan_no_urutkunjungan']);
+    $this->db->update('kunjungan',array('sudah'=>4));
+    $resep = array(
+      'tanggal'     => $tanggal,
+      'kode_dokter' => $kode_dokter,
+      'perawat1'    => $perawat1,
+      'perawat2'    => $perawat2,
+      'no_resep'    => $no_resep,
+      'periksa_idperiksa' => $periksa
+    );
+    if ($this->db->insert('resep', $resep)) {
+      $id_obat      = $this->input->post('kode');
+      $harga     = $this->input->post('harga');
+      $jumlah       = $this->input->post('jumlah');
+      $signa       = $this->input->post('signa');
+      $total_harga       = $this->input->post('ttl_harga');
+      $count = count($id_obat);
+
+      $total_hpp_obat = 0;
+      for ($i=0; $i < $count; $i++) {
+        $obat = $this->ModelObat->get_data_edit($id_obat[$i])->row_array();
+        $data = array(
+          'harga'          => $harga[$i],
+          'jumlah'         => $jumlah[$i],
+          'total_harga'    => $total_harga[$i],
+          'resep_no_resep' => $no_resep,
+          'obat_idobat'    => $id_obat[$i],
+          'signa' => $signa[$i]
+        );
+        $stok_saat_ini = (int)$obat['stok_berjalan']-(int)$jumlah[$i];
+        $this->db->where('idobat',$id_obat[$i]);
+        $this->db->update('obat',array('stok_berjalan'=>$stok_saat_ini));
+        $insert = $this->db->insert('detail_resep', $data);
+        $this->db->reset_query();
+        // $this->db->where('kunjungan',$periksa);
+        if ($insert == true) {
+          $status = 1;
+        }else {
+          $status = 0;
+        }
+        $total_hpp_obat += $obat['harga_beli_satuan_kecil']*$jumlah[$i];
+      }
+
+      $jam = date("H:i:s");
+      $jurnal1 = array(
+        'tanggal' => date("Y-m-d"),
+        'keterangan' => 'Transaksi nomor kunjungan '.$nokun,
+        'norek' => '10701',
+        'debet' => $total_hpp_obat,
+        'kredit' => 0,
+        'pasien_noRM' => $norm,
+        'no_urut' => $nokun,
+        'no_transaksi' => $kode,
+        'jam' => $jam
       );
-      if ($this->db->insert('resep', $resep)) {
-        $id_obat      = $this->input->post('kode');
-        $harga     = $this->input->post('harga');
-        $jumlah       = $this->input->post('jumlah');
-        $signa       = $this->input->post('signa');
-        $total_harga       = $this->input->post('ttl_harga');
-        $count = count($id_obat);
+      $jurnal2 = array(
+        'tanggal' => date("Y-m-d"),
+        'keterangan' => 'Transaksi nomor kunjungan '.$nokun,
+        'norek' => '10501',
+        'debet' => 0,
+        'kredit' => $total_hpp_obat,
+        'pasien_noRM' => $norm,
+        'no_urut' => $nokun,
+        'no_transaksi' => $kode,
+        'jam' => $jam
+      );
+      // $this->db->insert('jurnal',$jurnal1);
+      // $this->db->insert('jurnal',$jurnal2);
 
-        $total_hpp_obat = 0;
-        for ($i=0; $i < $count; $i++) {
-          $obat = $this->ModelObat->get_data_edit($id_obat[$i])->row_array();
-          $data = array(
-            'harga'          => $harga[$i],
-            'jumlah'         => $jumlah[$i],
-            'total_harga'    => $total_harga[$i],
-            'resep_no_resep' => $no_resep,
-            'obat_idobat'    => $id_obat[$i],
-            'signa' => $signa[$i]
-          );
-          $stok_saat_ini = (int)$obat['stok_berjalan']-(int)$jumlah[$i];
-          $this->db->where('idobat',$id_obat[$i]);
-          $this->db->update('obat',array('stok_berjalan'=>$stok_saat_ini));
-          $insert = $this->db->insert('detail_resep', $data);
-          $this->db->reset_query();
-          // $this->db->where('kunjungan',$periksa);
-          if ($insert == true) {
-            $status = 1;
-          }else {
-            $status = 0;
-          }
-          $total_hpp_obat += $obat['harga_beli_satuan_kecil']*$jumlah[$i];
-        }
-
-        $jam = date("H:i:s");
-        $jurnal1 = array(
-          'tanggal' => date("Y-m-d"),
-          'keterangan' => 'Transaksi nomor kunjungan '.$nokun,
-          'norek' => '10701',
-          'debet' => $total_hpp_obat,
-          'kredit' => 0,
-          'pasien_noRM' => $norm,
-          'no_urut' => $nokun,
-          'no_transaksi' => $kode,
-          'jam' => $jam
-        );
-        $jurnal2 = array(
-          'tanggal' => date("Y-m-d"),
-          'keterangan' => 'Transaksi nomor kunjungan '.$nokun,
-          'norek' => '10501',
-          'debet' => 0,
-          'kredit' => $total_hpp_obat,
-          'pasien_noRM' => $norm,
-          'no_urut' => $nokun,
-          'no_transaksi' => $kode,
-          'jam' => $jam
-        );
-        // $this->db->insert('jurnal',$jurnal1);
-        // $this->db->insert('jurnal',$jurnal2);
-
-        if ($status == 1) {
-          $this->session->set_flashdata('notif', $this->Notif->berhasil('Berhasil Tersimpan'));
-          redirect(base_url()."Periksa/index/".$data_periksa['kunjungan_no_urutkunjungan']);
-        } else {
-          $this->session->set_flashdata('notif', $this->Notif->gagal('Gagal Tersimpan'));
-          redirect(base_url()."Periksa/index/".$data_periksa['kunjungan_no_urutkunjungan']);
-        }
+      if ($status == 1) {
+        $this->session->set_flashdata('notif', $this->Notif->berhasil('Berhasil Tersimpan'));
+        redirect(base_url()."Periksa/index/".$data_periksa['kunjungan_no_urutkunjungan']);
       } else {
         $this->session->set_flashdata('notif', $this->Notif->gagal('Gagal Tersimpan'));
         redirect(base_url()."Periksa/index/".$data_periksa['kunjungan_no_urutkunjungan']);
       }
-      }
+    } else {
+      $this->session->set_flashdata('notif', $this->Notif->gagal('Gagal Tersimpan'));
+      redirect(base_url()."Periksa/index/".$data_periksa['kunjungan_no_urutkunjungan']);
     }
-
-
+    }
+    }
   }
 
   function obgyn()

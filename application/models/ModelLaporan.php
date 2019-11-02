@@ -31,9 +31,9 @@ class ModelLaporan extends CI_Model{
   }
   public function get_laba_rugi($from,$till){
     $data_pendapatan = $this->db
-    ->select("norek,tanggal,namarek,SUM(debet) as debet")
+    ->select("norek,tanggal,namarek,SUM(debet) as debet,SUM(kredit) as kredit")
     ->join("mbesar","mbesar.norek_mbesar=jurnal.norek")
-    ->where(array("DATE(tanggal)>="=>$from,"DATE(tanggal) <="=>$till))
+    ->where(array("DATE(tanggal) >="=>$from,"DATE(tanggal) <="=>$till))
     ->like("norek","4","after")
     ->or_like("norek","8","after")
     ->group_by('norek')
@@ -51,6 +51,7 @@ class ModelLaporan extends CI_Model{
       'pendapatan' => $data_pendapatan,
       'pengeluaran' => $data_pengeluaran
     );
+    // die(var_dump($respon));
     return $respon;
   }
   public function get_dokter(){

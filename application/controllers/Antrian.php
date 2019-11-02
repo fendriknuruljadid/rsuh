@@ -9,7 +9,7 @@ class Antrian extends CI_Controller{
     $this->load->model('ModelAdmisi');
   }
 
-  public function antrian(){
+  public function index(){
     $data = array(
       'body'            => 'Admisi/list',
       'kunjungan'       => $this->ModelAdmisi->get_data(null),
@@ -18,16 +18,6 @@ class Antrian extends CI_Controller{
 
     );
 		$this->load->view('antrian',$data);
-  }
-  public function antrian1(){
-    $data = array(
-      'body'            => 'Admisi/list',
-      'kunjungan'       => $this->ModelAdmisi->get_data(null),
-      'kunjungan_sudah' => $this->ModelAdmisi->get_data_sudah(null),
-      'antrian' => $this->db->get_where("antrian1",array('tanggal'=>date("Y-m-d")))->row_array()
-
-    );
-		$this->load->view('antrian1',$data);
   }
 
   public function proses($id=null){
@@ -43,15 +33,9 @@ class Antrian extends CI_Controller{
 
   public function reset(){
     $date = date("Y-m-d");
-    $this->db->where(array('tanggal'=>$date))->update('antrian',array('status'=>0));
-    echo "berhasil";
+      $this->db->where(array('tanggal'=>$date))->update('antrian',array('status'=>0));
+      echo "berhasil";
   }
-  public function reset1(){
-    $date = date("Y-m-d");
-    $this->db->where(array('tanggal'=>$date))->update('antrian1',array('status'=>0));
-    echo "berhasil";
-  }
-
 
   public function setuju(){
     $nokun = $this->uri->segment(3);
@@ -87,7 +71,7 @@ class Antrian extends CI_Controller{
   }
   public function panggil(){
     $antrian = $this->input->post('antrian');
-    $antrian = "LAB-11-DD";
+    // $antrian = "OBG-87-YM";
     // $signature = $this->input->post('ttd');
     // // echo $signature;
     // $hit = $this->db->get_where('kunjungan',array('no_urutkunjungan'=>$nokun))->num_rows();
@@ -102,44 +86,37 @@ class Antrian extends CI_Controller{
     $no = $baru[1];
     if ($baru[0]=='UMU') {
       $data = array(
-        'UMU' => $baru[2].$no,
-        'antrian_terakhir' => $baru[2].$no,
-        'unit_terakhir' => 'Poli Umum'
+        'UMU' => $no
       );
     }
     if ($baru[0]=='OBG') {
       $data = array(
-        'OBG' => $baru[2].$no,
-        'antrian_terakhir' => $baru[2].$no,
-        'unit_terakhir' => 'Poli Obgyn'
+        'OBG' => $no
       );
     }
     if ($baru[0]=='INT') {
       $data = array(
-        'INTERNIS' => $baru[2].$no,
-        'antrian_terakhir' => $baru[2].$no,
-        'unit_terakhir' => 'Poli Internis'
+        'INTERNIS' => $no
       );
     }
     if ($baru[0]=='GIG') {
       $data = array(
-        'GIG' => $baru[2].$no,
-        'antrian_terakhir' => $baru[2].$no,
-        'unit_terakhir' => 'Poli Gigi'
+        'GIG' => $no
       );
     }
     if ($baru[0]=='OZO') {
       $data = array(
-        'OZO' => $baru[2].$no,
-        'antrian_terakhir' => $baru[2].$no,
-        'unit_terakhir' => 'Poli Ozon'
+        'OZO' => $no
       );
     }
-    if ($baru[0]=='LAB') {
+    if ($baru[0]=='LOKET1') {
       $data = array(
-        'LAB' => $baru[2].$no,
-        'antrian_terakhir' => $baru[2].$no,
-        'unit_terakhir' => 'Laboratorium'
+        'LOKET1' => $no
+      );
+    }
+    if ($baru[0]=='LOKET2') {
+      $data = array(
+        'LOKET2' => $no
       );
     }
     if ($cek > 0) {
@@ -169,92 +146,8 @@ class Antrian extends CI_Controller{
           'no_antrian' => $antrian
           // 'nokun' => $nokun
         );
-        $pusher->trigger('ci_pusher3', 'my-event55',$data);
-        $this->db->where(array('tanggal'=>$date))->update('antrian',array('status'=>1));
-        if ($baru[0]=='LOKET1' || $baru[0]=="LOKET2") {
-          $id=$this->input->post("id");
-          $this->db->where('idantrian_loket',$id)->update('antrian_loket',array('panggilan'=>1));
-        }
-        echo "Panggilan dilakukan";
-      }else{
-        echo "Masih ada panggilan lain, mohon coba sesaat lagi";
-      }
-    //
-    //   $this->session->set_flashdata('pesan',"1");
-    //   redirect(base_url()."Admisi/signature");
-    // }
-  }
-  public function panggil1(){
-    $antrian = $this->input->post('antrian');
-    $antrian = "APOTIK-3-DD";
-
-    $baru = explode("-",$antrian);
-    $date = date("Y-m-d");
-    $cek = $this->db->get_where("antrian1",array('tanggal'=>$date))->num_rows();
-
-    $no = $baru[1];
-
-    if ($baru[0]=='LOKET1') {
-      $data = array(
-        'LOKET1' => $no,
-        'antrian_terakhir' => "B".$no,
-        'unit_terakhir' => "Loket 1"
-      );
-    }
-    if ($baru[0]=='LOKET2') {
-      $data = array(
-        'LOKET2' => $no,
-        'antrian_terakhir' => "L".$no,
-        'unit_terakhir' => 'Loket 2'
-      );
-    }
-
-    if ($baru[0]=='KASIR') {
-
-        $data = array(
-          'KASIR' => $baru[2].$no,
-          'antrian_terakhir' => $baru[2].$no,
-          'unit_terakhir' => 'APOTEK'
-        );
-    }
-
-    if ($baru[0]=='APOTIK') {
-      $data = array(
-        'APOTEK' => $baru[2].$no,
-        'antrian_terakhir' => $baru[2].$no,
-        'unit_terakhir' => 'APOTEK'
-      );
-    }
-
-    if ($cek > 0) {
-      $this->db->where("tanggal",$date);
-      $this->db->update("antrian1",$data);
-    }else{
-      $data['tanggal'] = $date;
-      $this->db->insert('antrian1',$data);
-    }
-
-
-    $dataku = $this->db->get_where("antrian1",array('tanggal'=>$date))->row_array();
-      if ($dataku['status']==0) {
-        // code...
-        $this->load->view("vendor/autoload.php");
-        $options = array(
-          'cluster' => 'ap1',
-          'useTLS' => true
-        );
-        $pusher = new Pusher\Pusher(
-          '58f10ec738925cc9cf18',
-          '989571a4920f2374328e',
-          '627660',
-          $options
-        );
-        $data = array(
-          'no_antrian' => $antrian
-          // 'nokun' => $nokun
-        );
         $pusher->trigger('ci_pusher3', 'my-event3',$data);
-        $this->db->where(array('tanggal'=>$date))->update('antrian1',array('status'=>1));
+        $this->db->where(array('tanggal'=>$date))->update('antrian',array('status'=>1));
         if ($baru[0]=='LOKET1' || $baru[0]=="LOKET2") {
           $id=$this->input->post("id");
           $this->db->where('idantrian_loket',$id)->update('antrian_loket',array('panggilan'=>1));

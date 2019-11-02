@@ -132,8 +132,8 @@
               <label class="custom-control-label" for="Kesadaran3">STUPOR</label>
             </div>
             <div class="col-sm-12 col-lg-12 custom-control custom-radio">
-              <input type="radio" id="Kesadaran3" name="kesadaran" value="KOMA" <?php if (@$asesmen['kesadaran']=='KOMA') {echo "checked";} ?> class="custom-control-input">
-              <label class="custom-control-label" for="Kesadaran3">KOMA</label>
+              <input type="radio" id="Kesadaran4" name="kesadaran" value="KOMA" <?php if (@$asesmen['kesadaran']=='KOMA') {echo "checked";} ?> class="custom-control-input">
+              <label class="custom-control-label" for="Kesadaran4">KOMA</label>
             </div>
           </div>
         </div>

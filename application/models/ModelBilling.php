@@ -26,11 +26,10 @@ class ModelBilling extends CI_Model{
   function data_list()
   {
     $date = date("Y-m-d");
-    return $query = $this->db->query("Select * from kunjungan,tujuan_pelayanan,pegawai,pasien where acc_ranap != 1 && pegawai.NIK=kunjungan.pegawai_NIK && sudah < 5 && kunjungan.pasien_noRM = pasien.noRM && tgl='".$date."' && tujuan_pelayanan.kode_tupel = kunjungan.tupel_kode_tupel ORDER BY no_urutkunjungan DESC");
+    return $query = $this->db->query("Select * from kunjungan,tujuan_pelayanan, pasien where acc_ranap != 1 && sudah < 5 && kunjungan.pasien_noRM = pasien.noRM && tgl='".$date."' && tujuan_pelayanan.kode_tupel = kunjungan.tupel_kode_tupel ORDER BY no_urutkunjungan DESC");
   }
   function data_filter($tanggal,$sts,$poli)
   {
-    $this->db->join("pegawai","pegawai.NIK=kunjungan.pegawai_NIK");
     $this->db->join('tujuan_pelayanan',"kunjungan.tupel_kode_tupel=tujuan_pelayanan.kode_tupel");
     $this->db->join('pasien','pasien.noRM=kunjungan.pasien_noRM');
     $this->db->order_by("no_urutkunjungan","DESC");

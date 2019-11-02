@@ -149,9 +149,9 @@ $(function(){
     var id= $(this).attr("id");
 
     var jml_beri = parseInt($("#batch"+id).val());
-    var id_pengadaan = $(this).attr("id_pengadaan");
-    var stok = parseInt($("#stok_"+id_pengadaan).val());
-    var resep_jml = parseInt($("#resep_"+id_pengadaan).val());
+    var id_pengadaan_baru = $(this).attr("id_pengadaan");
+    var stok = parseInt($("#stok_"+id_pengadaan_baru).val());
+    var resep_jml = parseInt($("#resep_"+id_pengadaan_baru).val());
     var beri = 0;
     $(".beri_"+kode_obat).each(function(){
       beri += parseInt($(this).val());
@@ -165,7 +165,7 @@ $(function(){
       alert("Jumlah beri melebihi resep");
     }
     else if(beri > resep_jml){
-      alert("Jumlah beri melebihi resep yang diminta");
+      alert("Sebelumnya telah ditambah obat yang sama dan jumlah beri melebihi resep yang diminta");
     }
     else if (list_batch.indexOf(id_pengadaan[id]) > -1) {
       alert("Obat dengan no batch ini telah ditambahkan sebelumnya");

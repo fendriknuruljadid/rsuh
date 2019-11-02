@@ -35,6 +35,7 @@
                           <th>Stok Real</th>
                           <th>Selisih</th>
                           <th>Selisih Harga</th>
+                          <th>keterangan</th>
                           <th width="%5">opsi</th>
                         </tr>
                       </thead>
@@ -46,90 +47,6 @@
                 </div>
 
 
-                <!-- <div class="form-group animated flipIn col-md-6 col-sm-12">
-                  <label for="exampleInputuname">Kode Batch :</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ti-notepad"></i></span>
-                    </div>
-                    <input type="text" id="kode" name="kode" class="form-control"  placeholder="Kode Batch" readonly>
-                  </div>
-                </div> -->
-                <!-- <div class="form-group animated flipIn col-md-6 col-sm-12">
-                  <label for="exampleInputuname">Nama Obat :</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Barang" readonly>
-                  </div>
-                </div> -->
-                <!-- <div class="form-group animated flipIn col-md-6 col-sm-12">
-                  <label for="exampleInputuname">Satuan :</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Satuan">
-                  </div>
-                </div> -->
-                <!-- <div class="form-group animated flipIn col-md-6 col-sm-12">
-                  <label for="exampleInputuname">Harga Beli :</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" name="harga_beli" id="harga_beli" class="form-control" placeholder="Harga Beli" readonly>
-                  </div>
-                </div> -->
-                <!-- <div class="form-group animated flipIn col-md-6 col-sm-12">
-                  <label for="exampleInputuname">Stok Komputer :</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" name="stok_komputer" id="stok_komputer" class="form-control" placeholder="Stok Komputer" readonly>
-                  </div>
-                </div> -->
-                <!-- <div class="form-group animated flipIn col-md-6 col-sm-12">
-                  <label for="exampleInputuname">Tanggal :</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="date" name="tanggal" id="tanggal" class="form-control" placeholder="Tanggal" value="<?php echo date("Y-m-d") ?>">
-                  </div>
-                </div>
-                <div class="form-group animated flipIn col-md-6 col-sm-12">
-                  <label for="exampleInputuname">Jumlah Real :</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" onkeydown="hitung()" name="jumlah_real" id="jumlah_real" class="form-control" placeholder="Jumlah Real" value="0">
-                  </div>
-                </div> -->
-                <!-- <div class="form-group animated flipIn col-md-6 col-sm-12">
-                  <label for="exampleInputuname">Selisih :</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" name="selisih" id="selisih" class="form-control" placeholder="Selisih">
-                  </div>
-                </div> -->
-                <!-- <div class="form-group animated flipIn col-md-6 col-sm-12">
-
-                </div>
-                <div class="form-group animated flipIn col-md-6 col-sm-12">
-                  <label for="exampleInputuname">Total Harga :</label>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" name="total_harga" id="total_harga" class="form-control" placeholder="Total Harga">
-                  </div>
-                </div> -->
                 <div class="col col-sm-12 com-md-12">
                   <button type="button" class="btn btn-outline-secondary btn-sm pull-left" onclick="window.history.back()"><i class="fa fa-reply"></i> Kembali</button>
                   <button type="submit" class="btn btn-primary btn-sm pull-right">SIMPAN</button>
@@ -189,7 +106,7 @@
     </div>
   </div>
 
-<div class="modal fade" id="scrollmodal" tabindex="-2" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+<div class="modal fade" id="scrollmodal" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -200,7 +117,7 @@
       </div>
       <div class="modal-body">
         <div class="table-responsive">
-          <table id="myTable" class="table table-bordered table-hover table-striped ">
+          <table id="tBatch" class="table table-bordered table-hover table-striped ">
             <thead>
               <tr>
                 <th>Nama Obat</th>
@@ -275,7 +192,7 @@
           "<td>"+res[i].stok+"</td>"+
           "<td>"+res[i].harga_beli+"</td>"+
           "<td>"+res[i].satuan+"</td>"+
-          "<td><button onclick='pilih(`"+res[i].iddetail_pembelian_obat+"`,`"+kode_obat+"`,`"+res[i].no_batch+"`,`"+res[i].nama_obat+"`,`"+res[i].stok+"`,`"+res[i].harga_beli+"`,`"+res[i].satuan_beli+"`)' type='button' id='"+i+"' class='btn-floating blue-gradient' data-toggle='tooltip' data-placement='top' title='' data-original-title='TambahKan'><i class='fa fa-check'></i></button></td>"+
+          "<td><button onclick='pilih(`"+res[i].iddetail_pembelian_obat+"`,`"+kode_obat+"`,`"+res[i].no_batch+"`,`"+res[i].nama_obat+"`,`"+res[i].stok+"`,`"+res[i].harga_beli+"`,`"+res[i].satuan+"`)' type='button' id='"+i+"' class='btn-floating blue-gradient' data-toggle='tooltip' data-placement='top' title='' data-original-title='TambahKan'><i class='fa fa-check'></i></button></td>"+
           "</tr>";
           no_batch.push(res[i].no_batch);
           ed.push(res[i].ed);
@@ -286,6 +203,8 @@
         $("#tabel_batch").html(html);
         $("#tBatch").dataTable();
         $("#scrollmodal").modal("toggle");
+        $("#tabel_obat").modal("toggle");
+        $("#scrollmodal").css('overflow-y', 'auto');
       });
     });
     $(document).on('click','.hapus',function(){
@@ -319,7 +238,7 @@
   });
 
   function pilih(id_p, kode_obat, no_batch, nama_obat, stok, harga, satuan) {
-    alert(no_batch);
+    // alert(no_batch);
     var list_batch=[];
     // alert($(this).attr("id"));
     // var id= $(this).attr("id");
@@ -332,13 +251,14 @@
       "<td><input type='hidden' id='harga_beli"+id_p+"' name='harga_beli[]' class='form-control' value='"+harga+"'>"+harga+"</td>" +
       "<td><input type='hidden' name='satuan[]' class='form-control' value='"+satuan+"'>"+satuan+"</td>" +
       "<td><input type='number' id='jumlah_komp"+id_p+"' class='form-control jml_beli' name='jumlah_komp[]' readonly value='"+stok+"'></td>" +
-      "<td><input type='number' id='jumlah_real"+id_p+"' class='form-control jml_beli' name='jumlah_real[]' onkeydown='hitung(`"+id_p+"`)'></td>" +
-      "<td><input type='number' id='selisih"+id_p+"' class='form-control jml_beli' name='selisih[]'></td>" +
-      "<td><input type='number' id='selisih_harga"+id_p+"' class='form-control jml_beli' name='selisih_harga[]'></td>" +
+      "<td><input type='number' id='jumlah_real"+id_p+"' class='form-control jml_beli' name='jumlah_real[]' onkeyup='hitung(`"+id_p+"`)'></td>" +
+      "<td><input type='number' readonly id='selisih"+id_p+"' class='form-control jml_beli' name='selisih[]'></td>" +
+      "<td ><input type='hidden' id='selisih_harga"+id_p+"' class='form-control jml_beli' name='selisih_harga[]'><span id='tx_selisih_harga"+id_p+"''></span></td>" +
+      "<td ><input type='text' id='ket' class='form-control' name='keterangan[]'></td>" +
       "<td><button type=\"button\"  class=\"hapus btn btn-danger btn-sm btn-circle\" data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Hapus Data\"><i class=\"fa fa-trash\"></i></button></td>"+
       "</tr>";
       $("tbody#tabel_opname").append(markup);
-      $("#scrollmodal").modal('toggle');
+      // $("#scrollmodal").modal('toggle');
       list_batch.push(id_p);
     }
 
@@ -364,5 +284,6 @@
     var tot = sel * $("#harga_beli"+id).val();
     $("#selisih"+id).val(sel);
     $("#selisih_harga"+id).val(tot);
+    $("#tx_selisih_harga"+id).html(tot);
   }
   </script>

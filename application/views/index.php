@@ -487,32 +487,6 @@ $(document).ready(function () {
   <script src="<?php echo base_url()?>desain/custom/pusher/kunjungan.js"></script>
   <script src="<?php echo base_url()?>desain/custom/pusher/signature.js"></script>
 
-  <!-- ============================================================== -->
-  <!-- Plugins form-picker -->
-  <!-- ============================================================== -->
-  <!-- Plugin JavaScript -->
-  <script src="<?php echo base_url(); ?>desain/assets/node_modules/moment/moment.js"></script>
-  <script src="<?php echo base_url(); ?>desain/assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-  <!-- Clock Plugin JavaScript -->
-  <script src="<?php echo base_url(); ?>desain/assets/node_modules/clockpicker/dist/jquery-clockpicker.min.js"></script>
-  <!-- Color Picker Plugin JavaScript -->
-  <script src="<?php echo base_url(); ?>desain/assets/node_modules/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
-  <script src="<?php echo base_url(); ?>desain/assets/node_modules/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
-  <script src="<?php echo base_url(); ?>desain/assets/node_modules/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
-  <!-- Date Picker Plugin JavaScript -->
-  <script src="<?php echo base_url(); ?>desain/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-  <!-- Date range Plugin JavaScript -->
-  <script src="<?php echo base_url(); ?>desain/assets/node_modules/timepicker/bootstrap-timepicker.min.js"></script>
-  <script src="<?php echo base_url(); ?>desain/assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
-  <script>
-
-  $('.clockpicker').clockpicker({
-      donetext: 'Done',
-  }).find('input').change(function() {
-      console.log(this.value);
-  });
-
-  </script>
 </body>
 
 </html>

@@ -130,6 +130,10 @@
                       <input type="text" name="vip" id="vip" class="form-control" placeholder="0" value="0" readonly>
                       <small class="form-text text-muted">VIP</small>
                     </div>
+                    <div class="col-sm-12 col-md-3">
+                      <input type="text" name="ozon" id="ozon" class="form-control" placeholder="0" value="0" readonly>
+                      <small class="form-text text-muted">Ozon</small>
+                    </div>
             </div>
           </div>
         </div>

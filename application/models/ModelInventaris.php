@@ -11,6 +11,7 @@ class ModelInventaris extends CI_Model{
 
   function get_data()
   {
+    $this->db->join("ruangan","inventaris.ruangan_idruangan=ruangan.idruangan");
     return $this->db->get('inventaris');
   }
 
@@ -21,6 +22,7 @@ class ModelInventaris extends CI_Model{
 
   function get_data_edit($id)
   {
+    $this->db->join("ruangan","inventaris.ruangan_idruangan=ruangan.idruangan");
     $this->db->where('noinven', $id);
     return $this->db->get('inventaris')->row_array();
   }
