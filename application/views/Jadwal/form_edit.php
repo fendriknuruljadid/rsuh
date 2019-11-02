@@ -8,7 +8,7 @@
       </div>
       <div class="col-12 col-md-9">
         <input type="text" name="nik" id="dokter" class="form-control" placeholder="Dokter" value="<?php echo @$jadwal['nama']; ?>" required>
-        
+
       </div>
     </div>
 

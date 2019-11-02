@@ -10,6 +10,7 @@ class ModelJasaPelayanan extends CI_Model{
   }
 
   public function get_data(){
+    $this->db->join("tujuan_pelayanan","tujuan_pelayanan.kode_tupel=jasa_pelayanan.tujuan_pelayanan_kode_tupel","LEFT");
     return $this->db->get('jasa_pelayanan')->result();
   }
 

@@ -22,7 +22,7 @@
                 <th>Opsi</th>
               </tr>
             </thead>
-            <tbody id="tabel_belum_periksa" class="tabel_belum_periksa_<?php echo $_SESSION['nik']?>" >
+            <tbody id="tabel_belum_periksa" >
 
               <?php $no=1;foreach ($kunjungan as $value): ?>
                 <?php $id_check = $value->no_urutkunjungan;$warna = "badge-primary";?>
@@ -35,7 +35,7 @@
                   if ($k == "UMU"){$warna = "badge-success"; $type="U";}elseif ($k == "IGD") {$warna = "badge-danger";$type="IG";}elseif($k == "OBG"){$warna = "badge-info";$type="O";}
                   elseif ($k == "GIG") {$warna = "badge-warning";$type="G";}elseif ($k == "OZO") {$warna = "badge-info";$type="OZ";} ?>
                   <h4><span class="badge badge-pill <?php echo $warna; ?>"><?php echo $value->tujuan_pelayanan;?></span></h4></td>
-                  <td><?php echo $value->inisial."".$value->no_antrian;?></td>
+                  <td><?php echo $type."".$value->no_antrian;?></td>
                   <td><?php echo $value->jam_daftar;?></td>
                   <td><?php if ($value->jenis_kunjungan == 0) {
                     echo "Baru";
@@ -44,19 +44,16 @@
                   }?></td>
 
                   <td>
-                    <a href="<?php echo $value->status_deposit!=0?base_url()."Periksa/index/".$value->no_urutkunjungan:'#'; ?>">
-                      <button <?php echo $value->status_deposit==0?'disabled':'';?>  type="button" class="btn btn-primary periksa btn-sm">
+                    <a href="<?php echo base_url()."Periksa/index/".$value->no_urutkunjungan; ?>">
+                      <button type="button" class="btn btn-primary periksa btn-sm">
                         <i class="fa fa-medkit"></i> Periksa
                       </button>
                     </a>
-                    <?php if ($value->status_deposit!=0): ?>
-
-                      <a href="#">
-                        <button type="button" class="btn btn-success periksa btn-sm panggilan_pasien" antrian="<?php echo $_SESSION['poli']."-".$value->no_antrian."-".$value->inisial;?>">
-                          <i class="fa fa-medkit"></i> Panggil Pasien
-                        </button>
-                      </a>
-                    <?php endif; ?>
+                    <a href="#">
+                      <button type="button" class="btn btn-success periksa btn-sm panggilan_pasien" antrian="<?php echo $_SESSION['poli']."-".$value->no_antrian;?>">
+                        <i class="fa fa-medkit"></i> Panggil Pasien
+                      </button>
+                    </a>
                     <a href="<?php echo base_url()."Kunjungan/delete/".$value->no_urutkunjungan; ?>">
                       <button type="button" class="btn btn-danger hapus-kunjungan btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Hapus Kunjungan">
                         <i class="fa fa-cut"></i>

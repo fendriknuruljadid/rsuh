@@ -9,7 +9,6 @@ class Login extends CI_Controller{
 	function index(){
 		$this->session->set_flashdata('item', 'value');
 		$this->load->view('Login/Login');
-		// $this->load->view('err');
 	}
 
 	function redirect($username)

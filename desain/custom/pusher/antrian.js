@@ -2,37 +2,13 @@ var playlist = [];
 var panggilan = [];
 var i = 0;
 var active = false;
-var url = 'http://utamahusada.esolusindo.com/desain/antrian/';
+var url = 'http://utamahusada.com/sim/desain/antrian/';
 playlist.push("awal.mp3");
 reset();
-var waktu = $("#input_jam").val();
-waktu = waktu.split(":");
-// alert(waktu);
-var jam = parseInt(waktu[0]);
-var menit = parseInt(waktu[1]);
-var detik = parseInt(waktu[2]);
-// alert(detik);
-function hitung_jam(){
-  setTimeout(hitung_jam,1000);
-  $(".jam").html(pad(jam,2)+":"+pad(menit,2)+":"+pad(detik,2));
-  detik++;
-  if (detik>=60) {
-    detik = 0;
-    menit++;
-    if (menit>=60) {
-      menit = 0;
-      jam++;
-      if (jam>24) {
-        jam=0;
-      }
-    }
-  }
-}
-hitung_jam();
 function reset(){
     $.ajax({
         type  : 'GET',
-        url   : 'http://utamahusada.esolusindo.com/Antrian/reset',
+        url   : 'http://utamahusada.com/sim/Antrian/reset',
         async : false,
         dataType : 'json',
         success: function(response) {
@@ -46,7 +22,21 @@ function pad (str, max) {
 }
 function get_audio(poli,no,inisial){
   var list = Array('kosong.mp3','satu.mp3','dua.mp3','tiga.mp3','empat.mp3','lima.mp3','enam.mp3','tujuh.mp3','delapan.mp3','sembilan.mp3','sepuluh.mp3','sebelas.mp3');
-
+  // if (poli=="UMU") {
+  //   playlist.push("u.mp3");
+  // }
+  // if (poli=="OBG") {
+  //   playlist.push("o.mp3")
+  // }
+  // if (poli=="OZO") {
+  //   playlist.push("oz.mp3")
+  // }
+  // if (poli=="INT") {
+  //   playlist.push("in.mp3")
+  // }
+  // if (poli=="GIG") {
+  //   playlist.push("ig.mp3")
+  // }
   if (inisial=="L") {
     playlist.push("l.mp3")
   }
@@ -122,12 +112,15 @@ function get_audio(poli,no,inisial){
     }
   }
 
+  // if (no < 1000) {
+  //   var puluhan = parseInt(no/100);
+  //   playlist.push(list[puluhan]);
+  //   playlist.push("puluh.mp3");
+  //   var satuan = parseInt(no%10);
+  //   playlist.push(list[satuan]);
+  // }
   if (poli=="UMU") {
     playlist.push("umum.mp3");
-  }
-
-  if (poli=="LAB") {
-    playlist.push("lab.mp3");
   }
   if (poli=="OBG") {
     playlist.push("obgyn.mp3")
@@ -141,7 +134,12 @@ function get_audio(poli,no,inisial){
   if (poli=="GIG") {
     playlist.push("gigi.mp3")
   }
-
+  if (poli=="LOKET1") {
+    playlist.push("loket1.mp3")
+  }
+  if (poli=="LOKET2") {
+    playlist.push("loket2.mp3")
+  }
 }
 function play_panggilan(){
   // if (!active) {
@@ -170,35 +168,27 @@ function play_panggilan(){
         audio.currentTime = 0;
         playlist = [];
         playlist.push("awal.mp3");
-        var lokasi = "";
         if (p[0]=="UMU") {
-          $(".antrian_umum").text(p[2]+p[1]);
-          lokasi = "Poli Umum";
+          $(".antrian_poliumum").text(pad(p[1],3));
         }
         if (p[0]=="OBG") {
-          $(".antrian_obgyn").text(p[2]+p[1]);
-          lokasi = "Poli Obgyn"
+          $(".antrian_poliobgyn").text(pad(p[1],3));
         }
         if (p[0]=="OZO") {
-          $(".antrian_ozon").text(p[2]+p[1]);
-          lokasi = "Poli Obgyn"
+          $(".antrian_poliozon").text(pad(p[1],3));
         }
         if (p[0]=="INT") {
-          $(".antrian_internis").text(p[2]+p[1]);
-          lokasi = "Poli Internis";
+          $(".antrian_poliinternis").text(pad(p[1],3));
         }
         if (p[0]=="GIG") {
-          $(".antrian_gigi").text(p[2]+p[1]);
-          lokasi = "Poli Gigi";
+          $(".antrian_poligigi").text(pad(p[1],3));
         }
-
-        if (p[0]=="LAB") {
-          $(".antrian_laborat").text(p[2]+p[1]);
-          lokasi = "Laboratorium";
+        if (p[0]=="LOKET1") {
+          $(".antrian_loket1").text(pad(p[1],3));
         }
-        $(".antrian_akhir").text(p[2]+p[1]);
-        $(".lokasi_akhir").text(lokasi);
-
+        if (p[0]=="LOKET2") {
+          $(".antrian_loket2").text(pad(p[1],3));
+        }
         panggilan.shift();
         if (panggilan.length!==0) {
           setTimeout(() => {
@@ -231,7 +221,7 @@ function play_panggilan(){
   });
 
   var channel = pusher.subscribe('ci_pusher3');
-  channel.bind('my-event55', function(data) {
+  channel.bind('my-event3', function(data) {
       // alert(data.no_antrian);
       // if (i==0) {
       // }

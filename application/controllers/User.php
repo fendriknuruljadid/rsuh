@@ -131,7 +131,7 @@ public function update_pass()
   $data = $this->db->get("user")->result();
   // die(var_dump($data));
   foreach ($data as $value) {
-    $pass = "123";
+    $pass = "rsuh";
     // code...
     $this->db->where('id_user',$value->id_user);
     $this->db->update('user', array(

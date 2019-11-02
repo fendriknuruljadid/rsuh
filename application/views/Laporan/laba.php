@@ -15,7 +15,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1"><i class="ti-calendar"></i></span>
                 </div>
-                <input type="date" name="tgl_mulai" id="tgl_mulai" value="<?php echo date("Y-m-d")?>" class="form-control" required>
+                <input type="date" name="tgl_mulai" value="<?php echo date("Y-m-d")?>" id="tgl_mulai" class="form-control" required>
               </div>
             </div>
           </div>
@@ -27,7 +27,7 @@
                   <span class="input-group-text" id="basic-addon1"><i class="ti-calendar"></i></span>
                 </div>
                 <!-- <input type="text" name="noBPJS" id="noBPJS" class="form-control" placeholder="xxxxxxxxxxxxx" value="<?php echo @$pasien['noBPJS']; ?>"> -->
-                <input type="date" name="tgl_sampai" id="tgl_sampai" value="<?php echo date("Y-m-d")?>" class="form-control" required>
+                <input type="date" name="tgl_sampai" value="<?php echo date("Y-m-d")?>" id="tgl_sampai" class="form-control" required>
               </div>
             </div>
           </div>
@@ -142,6 +142,7 @@ $(document).ready(function(){
         $(document).on("click","#proses",function(){
           var tgl_mulai = $("#tgl_mulai").val();
           var tgl_sampai = $("#tgl_sampai").val();
+          // alert(tgl_sampai);
           if (tgl_mulai=='') {
             alert("Harap pilih tanggal");
           }
@@ -161,20 +162,22 @@ $(document).ready(function(){
               success: function(response) {
                 $("#loader").hide();
                 // alert(response);
+
                 var pendapatan = response.pendapatan;
                 var pengeluaran = response.pengeluaran;
+                // alert(pendapatan.length);
                 var html1 = "";
                 var html2 = "";
                 var no1 = 1;
                 var no2 = 1;
                 var total_pendapatan = 0,total_pengeluaran=0;
                 for (var i = 0; i < pendapatan.length; i++) {
-                  if (pendapatan[i].debet!=0) {
+                  if (pendapatan[i].kredit!=0) {
                     html1 += '<tr>'+
                     '<td>'+no1+'</td>'+
                     '<td>'+pendapatan[i].namarek+'</td>'+
-                    '<td align="right">Rp.'+addCommas(pendapatan[i].debet)+'</td>';
-                    total_pendapatan += parseInt(pendapatan[i].debet);
+                    '<td align="right">Rp.'+addCommas(pendapatan[i].kredit)+'</td>';
+                    total_pendapatan += parseInt(pendapatan[i].kredit);
                     no1++;
 
                   }

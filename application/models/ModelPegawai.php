@@ -14,21 +14,6 @@ class ModelPegawai extends CI_Model{
     return $this->db->get('pegawai')->result();
   }
 
-  public function get_jadwal(){
-    $this->db->join("pegawai","pegawai_NIK=NIK");
-    return $this->db->get("jadwal")->result();
-  }
-  public function get_jadwal_1(){
-    $time = date("H:i:s");
-    $this->db->join("pegawai","pegawai_NIK=NIK");
-    return $this->db->get_where("jadwal",array("TIME(jam_mulai) <="=>$time,'TIME(jam_akhir) >='=>$time))->result();
-  }
-
-  public function get_data_dokter(){
-    $this->db->like('jabatan',"DOKTER","both");
-    return $this->db->get('pegawai')->result();
-  }
-
   public function get_data_edit($nik)
   {
     return $this->db->get_where('pegawai', array('NIK' => $nik))->row_array();

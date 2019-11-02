@@ -18,8 +18,6 @@ class ModelKunjungan extends CI_Model{
   public function get_data($tgl){
     $poli = $_SESSION['poli'];
     $this->db->join('pasien', 'pasien.noRM = kunjungan.pasien_noRM');
-
-    $this->db->join('pegawai', 'pegawai.NIK = kunjungan.pegawai_NIK');
     $this->db->join('tujuan_pelayanan', 'tujuan_pelayanan.kode_tupel = kunjungan.tupel_kode_tupel');
     if ($poli == null) {
       $this->db->where(array('sudah' => 0, 'tgl'=>$tgl,'acc_ranap !='=>1));
@@ -38,34 +36,7 @@ class ModelKunjungan extends CI_Model{
     }else{
       $poliwhere = "&& kunjungan.tupel_kode_tupel = '$poli'";
     }
-    $query = $this->db->query("Select * from kunjungan,tujuan_pelayanan,pegawai, pasien where sudah != 0 && pegawai.NIK=kunjungan.pegawai_NIK && kunjungan.pasien_noRM = pasien.noRM && tujuan_pelayanan.kode_tupel = kunjungan.tupel_kode_tupel && kunjungan.tgl = '$tgl'".$poliwhere);
-    return $query->result();
-  }
-  public function get_data1($tgl){
-    $poli = $_SESSION['poli'];
-
-    $this->db->join('pegawai', 'pegawai.NIK = kunjungan.pegawai_NIK');
-    $this->db->join('pasien', 'pasien.noRM = kunjungan.pasien_noRM');
-    $this->db->join('tujuan_pelayanan', 'tujuan_pelayanan.kode_tupel = kunjungan.tupel_kode_tupel');
-    if ($poli == null) {
-      $this->db->where(array('sudah' => 0, 'tgl'=>$tgl,'acc_ranap !='=>1));
-    }else {
-      $this->db->where(array('sudah' => 0, 'tgl'=>$tgl,'pegawai_NIK'=>$_SESSION['nik'], 'tupel_kode_tupel' => $poli ,'acc_ranap !='=>1));
-    }
-    // die(var_dump($_SESSION['poli']));
-    // $this->db->where('acc_ranap !=',1);
-    return $this->db->get('kunjungan')->result();
-  }
-
-  public function get_data_sudah1($tgl){
-    $poli = $_SESSION['poli'];
-    $poliwhere = "";
-    if ($poli == null) {
-      $poliwhere = "";
-    }else{
-      $poliwhere = "&& kunjungan.tupel_kode_tupel = '$poli' && pegawai_NIK = '".$_SESSION['nik']."'";
-    }
-    $query = $this->db->query("Select * from kunjungan,tujuan_pelayanan, pasien,pegawai where sudah != 0 && pegawai.NIK=kunjungan.pegawai_NIK && kunjungan.pasien_noRM = pasien.noRM && tujuan_pelayanan.kode_tupel = kunjungan.tupel_kode_tupel && kunjungan.tgl = '$tgl'".$poliwhere);
+    $query = $this->db->query("Select * from kunjungan,tujuan_pelayanan, pasien where sudah != 0 && kunjungan.pasien_noRM = pasien.noRM && tujuan_pelayanan.kode_tupel = kunjungan.tupel_kode_tupel && kunjungan.tgl = '$tgl'".$poliwhere);
     return $query->result();
   }
 
@@ -74,7 +45,7 @@ class ModelKunjungan extends CI_Model{
   {
     $tgl = date('Y-m-d');
     $this->db->select_max('no_antrian');
-    $this->db->where(array('tgl' => $tgl , 'pegawai_NIK' => $tupel ));
+    $this->db->where(array('tgl' => $tgl , 'tupel_kode_tupel' => $tupel ));
     $result = $this->db->get('kunjungan');
     return $result;
   }

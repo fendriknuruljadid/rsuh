@@ -36,7 +36,7 @@
                       if ($k == "UMU"){$warna = "badge-success"; $type="U";}elseif ($k == "IGD") {$warna = "badge-danger";$type="IG";}elseif($k == "OBG"){$warna = "badge-info";$type="O";}
                       elseif ($k == "GIG") {$warna = "badge-warning";$type="G";}elseif ($k == "OZO") {$warna = "badge-info";$type="OZ";} ?>
                   <h4><span class="badge badge-pill <?php echo $warna; ?>"><?php echo $value->tujuan_pelayanan;?></span></h4></td>
-                  <td><?php echo $value->inisial."".$value->no_antrian;?></td>
+                  <td><?php echo $type."".$value->no_antrian;?></td>
                 <td><?php echo $value->jam_daftar;?></td>
                 <td><?php if ($value->jenis_kunjungan == 0) {
                   echo "Baru";

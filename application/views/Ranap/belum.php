@@ -41,8 +41,8 @@
                             <i class="fa fa-medkit"></i> Periksa
                           </button>
                         </a>
-                        <a href="<?php echo base_url()."Ranap/pulang/".$value->no_urutkunjungan; ?>">
-                          <button type="button" class="btn btn-success periksa btn-sm">
+                        <a href="#"  data-toggle="modal" data-target="#pulang">
+                          <button id="<?php echo $value->no_urutkunjungan?>" type="button" class="btn btn-success periksa btn-sm pulangkan">
                             <i class="fa fa-home"></i> Siap Pulang
                           </button>
                         </a>
@@ -179,8 +179,24 @@
       </div>
     </div>
     <!-- Central Modal Large Info-->
+  <?php
+  $this->load->view("Periksa/modal_large",array(
+    'id'=>'pulang',
+    'judul' => 'Alasan Pulang',
+    'icon' => 'fas fa-user-secret',
+    'view' => 'Ranap/pulang',
+    'edit' => 0
+  ));
+
+  ?>
 <script>
 $(document).ready(function(){
+  var action = $("#form_pulang").attr("action");
+  $(document).on("click",".pulangkan",function(){
+    var id = $(this).attr("id");
+    $("#form_pulang").attr("action",action+id);
+  })
+
   $(document).on("click",".list_tt",function(){
     // alert("daj");
     var nokun = $(this).attr("id");

@@ -64,6 +64,15 @@ foreach ($roles_Roles as $value) {
             Ruangan</a>
     </li>
   <?php endif; ?>
+  <?php if (@$Menu_Roles['Administrasi']): ?>
+
+    <li <?php if ($this->uri->segment(1) == 'Administrasi'): ?>
+      class="active"
+    <?php endif; ?>>
+        <a href="<?php echo base_url().'Administrasi'; ?>">
+            Biaya Adminitrasi</a>
+    </li>
+  <?php endif; ?>
   <?php if (@$Menu_Roles['JenisObat']): ?>
 
     <li <?php if ($this->uri->segment(1) == 'JenisObat'): ?>
@@ -254,13 +263,6 @@ foreach ($roles_Roles as $value) {
 
 <?php if (@$Menu_Group['lk']): ?>
 <li class="nav-small-cap">--- LAYANAN KLINIK</li>
-<?php endif; ?>
-<?php if (@$Menu_Roles['AntrianLoket']): ?>
-<li>
-  <a class="waves-effect waves-dark" href="<?php echo base_url()."AntrianLoket/list"?>">
-    <i class="mdi mdi-human-male-female"></i>
-    <span class="hide-menu">Antrian Loket</span></a>
-</li>
 <?php endif; ?>
 <?php if (@$Menu_Roles['Pasien']): ?>
 <li>
@@ -461,6 +463,15 @@ foreach ($roles_Roles as $value) {
             <!-- <span class="inbox-num">3</span> -->
         </li>
       <?php endif; ?>
+      <?php if (@$Menu_Roles['Laporan']): ?>
+        <li <?php if ($this->uri->segment(1) == 'Laporan'): ?>
+          class="active"
+        <?php endif; ?>>
+            <a href="<?php echo base_url().'Laporan/buku_besar_detail'; ?>">
+                Laporan Buku Besar</a>
+            <!-- <span class="inbox-num">3</span> -->
+        </li>
+      <?php endif; ?>
     <?php endif; ?>
     <?php if ($_SESSION['jabatan']=='dgig'|| $_SESSION['jabatan']=='dumu' || $_SESSION['jabatan']=='dint' || $_SESSION['jabatan']=='dugd' || $_SESSION['jabatan']=='dozo' || $_SESSION['jabatan']=='RANAP' || $_SESSION['jabatan']=='dobg'): ?>
       <?php if (@$Menu_Roles['Laporan']): ?>
@@ -558,16 +569,7 @@ foreach ($roles_Roles as $value) {
 <?php if (@$Menu_Group['karyawan']): ?>
     <li class="nav-small-cap">--- KARYAWAN</li>
 <?php endif; ?>
-<?php if (@$Menu_Roles['Jadwal']): ?>
-  <li <?php if ($this->uri->segment(1) == 'Jadwal'): ?>
-    class="active"
-  <?php endif; ?>>
-      <a href="<?php echo base_url().'Jadwal'; ?>">
-          <i class="fas fa-user-md"></i>
-          <span class="hide-menu">Jadwal Dokter</span></a>
-      <!-- <span class="inbox-num">3</span> -->
-  </li>
-<?php endif; ?>
+
 
 <?php if (@$Menu_Roles['Pegawai']): ?>
   <li <?php if ($this->uri->segment(1) == 'Pegawai'): ?>

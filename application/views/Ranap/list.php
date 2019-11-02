@@ -1,4 +1,4 @@
-<?php echo form_open('Kunjungan/delete');
+<?php
 $jabatan = $_SESSION['jabatan'];
 $resepsionis = strpos($jabatan, "resepsionis");
 $pranap = strpos($jabatan, "PRANAP");
@@ -45,7 +45,7 @@ $pranap = strpos($jabatan, "PRANAP");
       </div>
       <div class="card-body">
 
-        <div class="row form-group">
+        <!-- <div class="row form-group">
 
                 <div class="col col-md-2 text-right">
                   <label for="tb" class="form-control-label">Filter Tanggal</label>
@@ -59,7 +59,7 @@ $pranap = strpos($jabatan, "PRANAP");
                         <button type="button" onclick="filter_kunjungan()" class="btn btn-success"> <i class="fa fa-search"></i> Filter</button>
                     </div>
                 </div>
-        </div>
+        </div> -->
 
         <ul class="nav nav-tabs customtab" role="tablist">
           <li class="nav-item">
@@ -95,7 +95,6 @@ $pranap = strpos($jabatan, "PRANAP");
     <div class="loader__figure"></div>
     <!-- <p class="loader__label"></p> -->
 </div>
-<?php echo form_close();?>
 <script type="text/javascript">
 
 $(document).ready(function(){

@@ -14,7 +14,6 @@ class Kunjungan extends CI_Controller {
     $this->load->model('ModelPasien');
     $this->load->model('ModelJenisPasien');
     $this->load->model('ModelAkuntansi');
-    $this->load->model('ModelPegawai');
     $this->data_kunjungan = array(
 
       'no_urutkunjungan' => $this->input->post('no_urutkunjungan'),
@@ -62,14 +61,6 @@ class Kunjungan extends CI_Controller {
       'tupel' => $this->ModelTujuanPelayanan->get_data(),
       'no_antrian' => $no_antrian,
     );
-    $jabatan = $_SESSION['jabatan'];
-    $nik = $_SESSION['nik'];
-    // die($jabatan);
-    if ($jabatan=='dobg' || $jabatan=='dint' || $jabatan=='dumu' || $jabatan=='dgig' || $jabatan=='dozo' || $jabatan=='dugd') {
-      $data['kunjungan']       = $this->ModelKunjungan->get_data1($tgl);
-      // die(var_dump($data['kunjungan']));
-      $data['kunjungan_sudah'] = $this->ModelKunjungan->get_data_sudah1($tgl);
-    }
 		$this->load->view('index',$data);
 	}
 
@@ -246,13 +237,13 @@ class Kunjungan extends CI_Controller {
    {
      $tupel = $this->input->post('tujuan_pelayanan');
      $no_antrian = null;
-     // if ($this->ModelKunjungan->total("UMU") > 0 ) {
-     //   foreach ($this->ModelKunjungan->max_no("UMU")->result() as $value) {
-     //     $no_antrian = $value->no_antrian;
-     //   }
-     // } else {
+     if ($this->ModelKunjungan->total("UMU") > 0 ) {
+       foreach ($this->ModelKunjungan->max_no("UMU")->result() as $value) {
+         $no_antrian = $value->no_antrian;
+       }
+     } else {
        $no_antrian = 0;
-     // }
+     }
 
     $data = array(
       'form' => 'Kunjungan/form',
@@ -264,7 +255,6 @@ class Kunjungan extends CI_Controller {
       'jenis_pasien' => $this->ModelJenisPasien->get_data(),
       'noRM' => $this->ModelPasien->generete_noRM(),
       'list_pekerjaan' => $this->ModelPekerjaan->get_data(),
-      'pegawai' => $this->ModelPegawai->get_jadwal_1()
     );
 		$this->load->view('index',$data);
   }
@@ -289,7 +279,6 @@ class Kunjungan extends CI_Controller {
     $this->data_kunjungan['NIK'] = $_SESSION['nik'];
     $this->data_kunjungan['jam_daftar'] = date('H:i:s');
     $this->data_kunjungan['no_antrian'] = $no_antrian;
-    $this->data_kunjungan['pegawai_NIK'] = $this->input->post("nik_dokter");
     $pasien = $this->ModelPasien->get_data_edit($this->data_kunjungan['pasien_noRM'])->row_array();
     if ($pasien['tgl_daftar']==date("Y-m-d")) {
       $this->data_kunjungan['administrasi'] =1;

@@ -27,6 +27,7 @@
                 </th>
                 <th>No Inventaris</th>
                   <th>Nama Inventaris</th>
+                  <th>Lokasi/Ruangan</th>
                   <th>Tanggal Beli</th>
                   <th>Harga</th>
                   <th>Opsi</th>
@@ -42,6 +43,7 @@
                 </td>
                 <td><?php echo $data->noinven?></td>
                   <td><?php echo $data->nama?></td>
+                  <td><?php echo $data->namaruangan?></td>
                   <td><?php echo date("d-m-Y",strtotime($data->tglbeli))?></td>
 
                   <td><?php echo "Rp.".number_format($data->harga)?></td>

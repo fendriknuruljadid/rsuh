@@ -64,7 +64,7 @@
                   <h4><span class="badge badge-pill <?php echo $warna; ?>"><?php echo $value->tujuan_pelayanan;?></span></h4></td>
                   <td><?php echo date("d-m-Y",strtotime($value->tgl));?></td>
                   <td><?php echo $value->jam_daftar;?></td>
-                  <td><?php echo $value->inisial."".$value->no_antrian;?></td>
+                  <td><?php echo $type."".$value->no_antrian;?></td>
                   <td><?php echo $value->pasien_noRM ?></td>
                   <td><?php echo $value->namapasien ?></td>
                   <td><?php if ($value->jenis_kunjungan == 0) {

@@ -10,6 +10,7 @@
       parent::__construct();
       $this->load->helper(array('url', 'language'));
       $this->load->model('ModelJasaPelayanan');
+      $this->load->model("ModelTujuanPelayanan");
       $this->jasa_pelayanan = array(
          'kode_jasa' => $this->input->post('kode_jasa'),
          'nama' => $this->input->post('nama'),
@@ -48,6 +49,7 @@
          'jasa_ob_3' => $this->input->post('jasa_ob_3'),
          'jasa_ob_4' => $this->input->post('jasa_ob_4'),
          'jasa_ob_5' => $this->input->post('jasa_ob_5'),
+         'tujuan_pelayanan_kode_tupel' => $this->input->post('poli'),
       );
     }
 
@@ -65,6 +67,7 @@
       $data = array(
         'form' => 'JasaPelayanan/form',
         'body' => 'JasaPelayanan/input',
+        'tupel' => $this->ModelTujuanPelayanan->get_data(),
        );
       $this->load->view('index', $data);
     }
@@ -92,7 +95,8 @@
       $data = array(
         'form' => 'JasaPelayanan/form',
         'body' => 'JasaPelayanan/edit',
-        'jasa_pelayanan' => $this->ModelJasaPelayanan->get_data_edit($id)->row_array()
+        'jasa_pelayanan' => $this->ModelJasaPelayanan->get_data_edit($id)->row_array(),
+        'tupel' => $this->ModelTujuanPelayanan->get_data(),
        );
       $this->load->view('index', $data);
     }

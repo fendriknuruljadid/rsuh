@@ -549,6 +549,7 @@ function input_labkun()
  }
 
  public function input_resep(){
+
    $tanggal        = date('Y-m-d h:i:s');
    $kode_dokter    = $_SESSION['nik'];
    $perawat1       = $this->input->post('perawat1');
@@ -560,9 +561,9 @@ function input_labkun()
    $this->db->update('kunjungan',array('sudah'=>4));
    $daftar_obat      = $this->input->post('kode');
    if (empty($daftar_obat)) {
-        $this->session->set_flashdata('notif', $this->Notif->gagal('Gagal membuat resep, obat tidak dipilih'));
-        redirect(base_url()."PeriksaRanap/index/".$data_periksa['kunjungan_no_urutkunjungan']."/".$periksa);
-      }else{
+     $this->session->set_flashdata('notif', $this->Notif->gagal('Gagal membuat resep, obat tidak dipilih'));
+     redirect(base_url()."PeriksaRanap/index/".$data_periksa['kunjungan_no_urutkunjungan']."/".$periksa);
+   }else{
 
    $resep = array(
      'tanggal'     => $tanggal,
@@ -612,7 +613,7 @@ function input_labkun()
      $this->session->set_flashdata('notif', $this->Notif->gagal('Gagal Tersimpan'));
      redirect(base_url()."PeriksaRanap/index/".$data_periksa['kunjungan_no_urutkunjungan']."/".$periksa);
    }
-  }
+ }
 
  }
 

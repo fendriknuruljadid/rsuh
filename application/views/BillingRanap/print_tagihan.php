@@ -166,10 +166,12 @@
                     <!-- <button class="btn btn-danger" type="submit" id="submit"> Proses Pembayaran </button> -->
                     <!-- <button onClick="javascript:window.print();" class="btn btn-primary btn-outline" type="button"> <span><i class="fa fa-print"></i> Print</span> </button> -->
                 </div>
-                <?php foreach ($detail_resep as $data): ?>
-                  <input type="hidden" name="idobat[]" value="<?php echo $data->idobat?>">
-                  <input type='hidden' name='jumlah_akhir[]' value="<?php echo $data->jumlah?>">
-                <?php endforeach; ?>
+                <?php if (!empty($detail_resep)): ?>
+                  <?php foreach ($detail_resep as $data): ?>
+                    <input type="hidden" name="idobat[]" value="<?php echo $data->idobat?>">
+                    <input type='hidden' name='jumlah_akhir[]' value="<?php echo $data->jumlah?>">
+                  <?php endforeach; ?>
+                <?php endif; ?>
                 <?php echo form_close(); ?>
             </div>
         </div>

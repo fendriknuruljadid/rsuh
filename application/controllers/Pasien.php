@@ -89,7 +89,7 @@ class Pasien extends CI_Controller {
       'provinsi' => $this->input->post('provinsi'),
       'tinggal_dengan' => $tinggal_dengan,
       'status_kawin' => $this->input->post('perkawinan') ,
-      'noRM' => $this->ModelPasien->generete_noRM(),
+      'noRM' => $this->input->post('noRM'),
       'noBPJS' => $this->input->post('noBPJS'),
       'noAsuransiLain' => $this->input->post('noAsuransiLain'),
       'namapasien' => strtoupper($this->input->post('namapasien')),

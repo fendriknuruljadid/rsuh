@@ -23,6 +23,18 @@
   </div>
   <div class="col-md-3">
     <div class="form-group animated flipIn">
+      <label for="exampleInputuname">Ruangan Inventaris</label>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><i class="ti-slice"></i></span>
+        </div>
+        <input type="text" name="ruangan" id="ruangan" class="form-control" placeholder="nama ruangan" value="<?php echo @$inventaris['namaruangan']; ?>" required>
+        <input type="hidden" name="idruangan" id="idruangan" value="<?php echo @$inventaris['ruangan_idruangan']?>">
+        </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="form-group animated flipIn">
       <label for="exampleInputuname">Tanggal Beli/Catat</label>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -205,8 +217,21 @@
     </div>
 </div>
 <?php $this->load->view('Inventaris/form_dialog',$no_rek)?>
+
+<?php $this->load->view('Inventaris/form_dialog2',$ruangan)?>
 <script>
 $(document).ready(function(){
+    $("#list_ruangan").dataTable();
+  $(document).on('focus','#ruangan',function(){
+    $("#modalruangan").modal('toggle');
+  })
+  $(document).on('click','.ruangan',function(){
+    var id = $(this).attr('norek');
+    var nama= $(this).attr('namarek');
+    $("#idruangan").val(id);
+    $("#ruangan").val(nama);
+    $("#modalruangan").modal('toggle');
+  })
   $(document).on('click','.rek_akun',function(){
     var no_rek = $(this).attr('norek');
     var nama_akun = $(this).attr('namarek');

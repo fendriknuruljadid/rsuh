@@ -127,7 +127,7 @@
                                 </tr>
                               </table>
                             <table border="0">
-                              
+
                               <tr>
                                 <td><h5><b>Pembayaran :</b><td> <i>Rp</i></td><h5></td><td><?php echo number_format($bayar_billing['jml_bayar'],2,",",".");?></td>
                               </tr>

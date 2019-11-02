@@ -575,7 +575,7 @@
                               <div class="col-12 col-md-6">
                                 <div class="custom-control custom-checkbox">
                                   <input type="checkbox" id="tmur" name="corejantung" value="Murmur" class="custom-control-input">
-                                  <label class="custom-control-label" for="tmur">Murmur</label>
+                              <label class="custom-control-label" for="tmur">Murmur</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                   <input type="checkbox" id="galop" name="corejantung" value="Galop" class="custom-control-input">
@@ -732,8 +732,8 @@
 
 
 
-              <?php echo $this->Core->btn_input(); ?>
-              <?php echo form_close(); ?>
+                            <?php echo $this->Core->btn_input(); ?>
+                            <?php echo form_close(); ?>
 
             </div>
 

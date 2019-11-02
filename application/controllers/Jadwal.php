@@ -111,10 +111,20 @@ public function update_pass()
   function delete()
 	{
 		$id = $this->input->post('id');
-    $this->db->where_in('idjadwal',$id);
-    $this->db->delete("jadwal");
-    $this->session->set_flashdata('notif',$this->Notif->berhasil("Berhasil Menghapus Jadwal"));
-    redirect(base_url()."Jadwal");
+    $cek = $this->db->where_in('user_id_user', $id)->get('riwayat_login')->num_rows();
+    if ($cek>0) {
+      $this->session->set_flashdata('alert', $this->Core->alert_succcess('Gagal Hapus Data User, Data masih Aktif!!!'));
+      redirect('User');
+    }else{
+  		$this->db->where_in('id_user', $id);
+      $delete = $this->db->delete('user');
+  		if ($delete == true) {
+  				$this->session->set_flashdata('alert', $this->Core->alert_succcess('Berhasil Hapus Data Pegawai'));
+  		}else{
+  				$this->session->set_flashdata('alert', $this->Core->alert_succcess('Gagal Hapus Data Pegawai, Data masih Terrelasi!!!'));
+  		};
+  		redirect('User');
+    }
 
 	}
 

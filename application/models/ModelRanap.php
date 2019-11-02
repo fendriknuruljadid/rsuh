@@ -18,7 +18,7 @@ class ModelRanap extends CI_Model{
     return $this->db->get_where('kunjungan',array('sudah <'=>5,'tujuan_poli'=>'RANAP','acc_ranap'=>1))->result();
   }
   public function get_data2($tgl){
-    $tanggal = date("Y-m-d",strtotime("-14 days"));
+    $tanggal = date("Y-m-d",strtotime("-28 days"));
     $this->db->order_by("no_urutkunjungan","DESC");
     $this->db->group_by('no_urutkunjungan');
     $this->db->join('tempat_tidur','tempat_tidur.no_tt=kunjungan.tempat_tidur_no_tt');

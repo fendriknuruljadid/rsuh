@@ -45,6 +45,7 @@ class StokOpname extends CI_Controller{
   function insert()
   {
     $kode = $this->ModelAkuntansi->generete_notrans();
+    $kode_input = $this->Core->generate_kode(10);
     $jam = date("H:i:s");
     $id = $this->input->post("id_pengadaan");
     for ($i=0; $i < count($id); $i++) {
@@ -59,34 +60,46 @@ class StokOpname extends CI_Controller{
         'jumlah_komp' => $this->input->post("jumlah_komp")[$i],
         'selisih'     => $this->input->post("selisih")[$i],
         'selisih_harga'=> $this->input->post("selisih_harga")[$i],
+        'kode_input' => $kode_input,
+        'keterangan'=> $this->input->post("keterangan")[$i]
       );
       $this->db->insert("stok_opname", $data);
       $this->db->reset_query();
-      $jurnal_kredit = array(
-        'tanggal' => $this->input->post("tanggal"),
-        'keterangan' => 'Selisih harga dari obat '.$this->input->post("nama")[$i].' ,nomor batch '.$this->input->post("no_batch")[$i].', sejumlah '.$this->input->post("selisih")[$i].', dengan harga beli per satuan Rp. '.$this->input->post("harga_beli")[$i].' ,tanggal '.date("d-m-Y"),
-        'norek' => '10501',
-        'debet' => 0,
-        'kredit' => $this->input->post("selisih_harga")[$i],
-        'no_transaksi' => $kode,
-        'jam' => $jam
-      );
-      $this->db->insert("jurnal", $jurnal_kredit);
-      $this->db->reset_query();
-      $jurnal_debet = array(
-        'tanggal' => $data_billing['tanggal'],
-        'keterangan' => 'Selisih harga dari obat '.$this->input->post("nama")[$i].' ,nomor batch '.$this->input->post("no_batch")[$i].', sejumlah '.$this->input->post("selisih")[$i].', dengan harga beli per satuan Rp. '.$this->input->post("harga_beli")[$i].' ,tanggal '.date("d-m-Y"),
-        'norek' => '60009',
-        'debet' => $this->input->post("selisih_harga")[$i],
-        'kredit' => 0,
-        'no_transaksi' => $kode,
-        'jam' => $jam,
-        // 'pasien_noRM' =>
-      );
-      $this->db->insert("jurnal", $jurnal_debet);
-      $this->db->reset_query();
+      if ($this->input->post("selisih_harga")[$i] != 0) {
+        $jurnal_kredit = array(
+          'tanggal' => $this->input->post("tanggal"),
+          'keterangan' => 'Selisih harga dari obat '.$this->input->post("nama")[$i].' ,nomor batch '.$this->input->post("no_batch")[$i].', sejumlah '.$this->input->post("selisih")[$i].', dengan harga beli per satuan Rp. '.$this->input->post("harga_beli")[$i].' ,tanggal '.date("d-m-Y"),
+          'norek' => '10501',
+          'debet' => 0,
+          'kredit' => $this->input->post("selisih_harga")[$i],
+          'no_transaksi' => $kode,
+          'jam' => $jam
+        );
+        $this->db->insert("jurnal", $jurnal_kredit);
+        $this->db->reset_query();
+        $jurnal_debet = array(
+          'tanggal' => $this->input->post("tanggal"),
+          'keterangan' => 'Selisih harga dari obat '.$this->input->post("nama")[$i].' ,nomor batch '.$this->input->post("no_batch")[$i].', sejumlah '.$this->input->post("selisih")[$i].', dengan harga beli per satuan Rp. '.$this->input->post("harga_beli")[$i].' ,tanggal '.date("d-m-Y"),
+          'norek' => '60009',
+          'debet' => $this->input->post("selisih_harga")[$i],
+          'kredit' => 0,
+          'no_transaksi' => $kode,
+          'jam' => $jam,
+          // 'pasien_noRM' =>
+        );
+        $this->db->insert("jurnal", $jurnal_debet);
+        $this->db->reset_query();
+      }
+
 
       $data_obat = $this->ModelObat->get_data_edit($this->input->post("kode_obat")[$i])->row_array();
+      $data_pengadaan = $this->db->get_where("detail_pembelian_obat",array("iddetail_pembelian_obat"=>$id[$i]))->row_array();
+      if ($data_pengadaan['stok_opname']==NULL) {
+        $opname = ($this->input->post("selisih")[$i]);
+      }else{
+        $opname = $data_pengadaan['stok_opname']+($this->input->post("selisih")[$i]);
+      }
+      $this->db->where("iddetail_pembelian_obat",$id[$i])->update("detail_pembelian_obat",array("stok_opname"=>$opname));
       $stok_baru = $data_obat['stok'] + ($this->input->post("selisih")[$i]);
       $stok_berjalan_baru = $data_obat['stok_berjalan'] + ($this->input->post("selisih")[$i]);
       $update = array(

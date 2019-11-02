@@ -30,7 +30,6 @@
                   <th>Kategori</th>
                   <th>Dosis</th>
                   <th>Stok</th>
-                  <th>Stok Berjalan</th>
                   <th>Opsi</th>
               </tr>
           </thead>
@@ -48,7 +47,6 @@
                   <td><?php echo $data->kategori_obat?></td>
                   <td><?php echo $data->dosis?></td>
                   <td><?php if($data->stok==null){echo "0";}else{echo $data->stok;}?></td>
-                  <td><?php if($data->stok_berjalan==null){echo "0";}else{echo $data->stok_berjalan;}?></td>
                   <td >
                     <span class="btn-group">
                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -122,6 +120,7 @@ $(function(){
       $("#kelas_2").val("Rp."+res.harga_3);
       $("#kelas_1").val("Rp."+res.harga_4);
       $("#vip").val("Rp."+res.harga_5);
+      $("#hrg_ozon").val("Rp."+res.harga_ozon);
     });
   });
   $(document).on('click','.detail_batch',function(){

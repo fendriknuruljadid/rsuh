@@ -232,7 +232,7 @@
                               <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="ti-slice"></i></span>
                               </div>
-                              <input type="number" name="siastole" class="form-control" placeholder="---" value="<?php echo $kunjungan['sistole']?>">
+                              <input type="number" name="siastole" class="form-control" max="300" placeholder="---" value="<?php echo $kunjungan['sistole']?>">
 
                             </div>
                           </div>
@@ -245,7 +245,7 @@
                               <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="ti-slice"></i></span>
                               </div>
-                              <input type="number" name="diastole" class="form-control" placeholder="---" value="<?php echo $kunjungan['diastole']?>">
+                              <input type="number" name="diastole" max="170" min="0" class="form-control" placeholder="---" value="<?php echo $kunjungan['diastole']?>">
 
                             </div>
                           </div>

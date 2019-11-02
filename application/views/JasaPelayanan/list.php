@@ -28,6 +28,7 @@
                     </th>
                     <th>Kode</th>
                       <th>Nama JaPel</th>
+                      <th>Poli</th>
                       <th>Harga (Rawat Jalan)</th>
                       <th>Harga (Kelas 3)</th>
                       <th>Harga (Kelas 2)</th>
@@ -47,6 +48,7 @@
                     </td>
                     <td><?php echo $data->kode_jasa; ?></td>
                       <td><?php echo $data->nama; ?></td>
+                      <td><?php echo $data->tujuan_pelayanan; ?></td>
                       <td><?php echo "Rp. ".number_format($data->hrg_1,0,",",".")?></td>
                       <td><?php echo "Rp. ".number_format($data->hrg_2,0,",",".")?></td>
                       <td><?php echo "Rp. ".number_format($data->hrg_3,0,",",".")?></td>

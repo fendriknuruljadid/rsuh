@@ -21,10 +21,6 @@ class ModelRekap extends CI_Model{
       $total_non_billing = 0;
       $total_kunjungan = 0;
       $total_rujuk = 0;
-      $ranap_billing = 0;
-      $ranap_non = 0;
-      $total_ranap = 0;
-      $ranap = 0;
       foreach ($data as $value) {
         $data1 = $this->db
         ->get_where('kunjungan',array('DATE(tgl) >='=>$from,'DATE(tgl) <='=>$till,'tupel_kode_tupel'=>$value->tupel_kode_tupel))
@@ -33,23 +29,15 @@ class ModelRekap extends CI_Model{
         $non_billing = 0;
         $rujuk = 0;
         foreach ($data1 as $value1) {
-          if ($value1->acc_ranap==1) {
-            if ($value1->billing == NULL || $value1->billing !=1) {
-              $ranap_billing++;
-            }else{
-              $ranap_non++;
-            }
-            $ranap++;
+          if ($value1->billing == NULL || $value1->billing !=1) {
+            $non_billing++;
           }else{
-
-            if ($value1->billing == NULL || $value1->billing !=1) {
-              $non_billing++;
-            }else{
-              $billing++;
-            }
+            $billing++;
+          }
+          if($value->acc_ranap==1){
+            $rujuk++;
           }
         }
-
         $res = array(
           'tujuan' => $value->tujuan_pelayanan,
           'jumlah' => $value->jumlah,
@@ -58,21 +46,12 @@ class ModelRekap extends CI_Model{
           'rujuk' => $rujuk
         );
         $total_rujuk += $rujuk;
-        $total_billing += $billing+$ranap_billing;
-        $total_non_billing += $non_billing+$ranap_non;
+        $total_billing += $billing;
+        $total_non_billing += $non_billing;
         $total_kunjungan += $value->jumlah;
         array_push($respon,$res);
 
       }
-      $res = array(
-        'tujuan' => "RAWAT INAP",
-        'jumlah' => $ranap,
-        'billing' => $ranap_billing,
-        'non_billing' => $ranap_non,
-        'rujuk' => $total_rujuk
-      );
-      array_push($respon,$res);
-
       $res = array(
         'tujuan' => "TOTAL",
         'jumlah' => $total_kunjungan,

@@ -112,7 +112,7 @@ $(document).ready(function(){
           var no_antrian = $(this).attr("antrian");
           $.ajax({
             type: 'POST',
-            url: '<?php echo base_url();?>Antrian/panggil1/',
+            url: '<?php echo base_url();?>Antrian/panggil/',
             data: { antrian: no_antrian },
             beforeSend: function () {
                    // $('#kunjungan_belum').hide();

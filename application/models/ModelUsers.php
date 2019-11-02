@@ -30,9 +30,6 @@ class ModelUsers extends CI_Model{
   function cek_username2($username,$poli){
       return $this->db->get_where("user",array('nama'=>$username,'Jabatan'=>$poli));
   }
-  function cek_username3($username,$poli){
-      return $this->db->get_where("user",array('nama'=>$username,'Jabatan'=>strtolower($poli)));
-  }
 
    function total_rows($username) {
        return $this->db->get_where('user', array('Nama'=>$username))->num_rows();

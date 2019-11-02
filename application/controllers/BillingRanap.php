@@ -49,7 +49,7 @@ class BillingRanap extends CI_Controller{
     $biaya = $this->ModelBilling->biaya()->row_array();
     $biaya_administrasi = $biaya['rawat_inap'];
     $biaya_blanko = $biaya['blanko'];
-    $biaya_rekam_medis = $biaya['rekam_medis'];
+    $biaya_rekam_medis = $biaya['rekam_medis_ranap'];
     $data_kunjungan = $this->ModelBilling->data_ranap($id_kunjungan);
     if ($data_kunjungan['administrasi']==0) {
       $biaya_administrasi = 0;
@@ -218,7 +218,7 @@ class BillingRanap extends CI_Controller{
     $data_kunjungan = $this->ModelBilling->data_ranap($id_kunjungan);
     $biaya_administrasi = $biaya['rawat_inap'];
     $biaya_blanko = $biaya['blanko'];
-    $biaya_rekam_medis = $biaya['rekam_medis'];
+    $biaya_rekam_medis = $biaya['rekam_medis_ranap'];
     if ($data_kunjungan['administrasi']==0) {
       $biaya_administrasi = 0;
     }
@@ -387,12 +387,14 @@ class BillingRanap extends CI_Controller{
     $resep_rajal = $this->ModelRanap->get_all_resep($nokun,$data_kunjungan['tupel_kode_tupel']);
     $persediaan_obat1 = 0;
     $pendapatan1 = 0;
+    $harga_beli1 = 0;
     if (!empty($resep_rajal)) {
       foreach ($resep_rajal as $value) {
         $tot_persediaan = $value->harga_beli_satuan_kecil*$value->jumlah;
         $tot_pendapatan = $value->total_harga;
         $persediaan_obat1 += $tot_persediaan;
         $pendapatan1 += $tot_pendapatan;
+        $harga_beli1 += $value->jumlah*$value->harga_beli_satuan_kecil;
       }
     }
     $bhp_rajal = $this->ModelRanap->get_all_bhp($nokun,$data_kunjungan['tupel_kode_tupel']);
@@ -402,17 +404,22 @@ class BillingRanap extends CI_Controller{
         $tot_pendapatan = $value->total_harga;
         $persediaan_obat1 += $tot_persediaan;
         $pendapatan1 += $tot_pendapatan;
+        $harga_beli1 += $value->jumlah*$value->harga_beli_satuan_kecil;
       }
     }
     //semua resep rawat inap
     $resep_ranap = $this->ModelRanap->get_all_resep($nokun,"RANAP");
     $persediaan_obat2 = 0;
     $pendapatan2 = 0;
-    foreach ($resep_ranap as $value) {
-      $tot_persediaan = $value->harga_beli_satuan_kecil*$value->jumlah;
-      $tot_pendapatan = $value->total_harga;
-      $persediaan_obat2 += $tot_persediaan;
-      $pendapatan2 += $tot_pendapatan;
+    $harga_beli2=0;
+    if (!empty($resep_ranap)) {
+      foreach ($resep_ranap as $value) {
+        $tot_persediaan = $value->harga_beli_satuan_kecil*$value->jumlah;
+        $tot_pendapatan = $value->total_harga;
+        $persediaan_obat2 += $tot_persediaan;
+        $pendapatan2 += $tot_pendapatan;
+        $harga_beli2 += $value->jumlah*$value->harga_beli_satuan_kecil;
+      }
     }
     $bhp_ranap = $this->ModelRanap->get_all_bhp($nokun,"RANAP");
     if (!empty($bhp_ranap)) {
@@ -422,9 +429,10 @@ class BillingRanap extends CI_Controller{
         $tot_pendapatan = $value->total_harga;
         $persediaan_obat2 += $tot_persediaan;
         $pendapatan2 += $tot_pendapatan;
+        $harga_beli2 += $value->jumlah*$value->harga_beli_satuan_kecil;
       }
     }
-    $pendapatan_obat = $pendapatan1+$pendapatan2;
+    $pendapatan_obat = ($pendapatan1+$pendapatan2)-($harga_beli1+$harga_beli2);
     $harga_beli = $persediaan_obat1+$persediaan_obat2;
 
     //total tindakan rajal dan ranap
@@ -1025,7 +1033,7 @@ class BillingRanap extends CI_Controller{
     $biaya_administrasi = $biaya['rawat_inap'];
     $biaya_blanko = $biaya['blanko'];
     $data_kunjungan = $this->ModelBilling->data_ranap($id_kunjungan);
-    $biaya_rekam_medis = $biaya['rekam_medis'];
+    $biaya_rekam_medis = $biaya['rekam_medis_ranap'];
     if ($data_kunjungan['administrasi']==0) {
       $biaya_administrasi = 0;
     }
@@ -1142,7 +1150,7 @@ class BillingRanap extends CI_Controller{
       'ppn' => $ppn,
       'total_billing' => $total_billing,
       'terbilang' => $this->ModelBilling->terbilang($total_billing)." rupiah",
-      'detail_resep' => $this->ModelBilling->detail_resep2($id_resep)->result(),
+      'detail_resep' => $this->ModelBilling->detail_resep2($id_resep)!=NULL?$this->ModelBilling->detail_resep2($id_resep)->result():NULL,
       'bayar_billing' => $hasil_billing,
       'riwayat_kamar' => $data_kamar,
       'detail_bhp' => $detail_bhp,
@@ -1162,7 +1170,7 @@ class BillingRanap extends CI_Controller{
     $data_kunjungan = $this->ModelBilling->data_ranap($id_kunjungan);
     $biaya_administrasi = $biaya['rawat_inap'];
     $biaya_blanko = $biaya['blanko'];
-    $biaya_rekam_medis = $biaya['rekam_medis'];
+    $biaya_rekam_medis = $biaya['rekam_medis_ranap'];
     if ($data_kunjungan['administrasi']==0) {
       $biaya_administrasi = 0;
     }

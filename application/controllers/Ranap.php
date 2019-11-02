@@ -20,14 +20,15 @@ class Ranap extends CI_Controller{
 		$this->load->view('index',$data);
   }
   public function pulang($id=null){
+    $alasan = $this->input->post("alasan");
     $this->db->where('no_urutkunjungan',$id);
-    $this->db->update('kunjungan',array('siap_pulang'=>1));
+    $this->db->update('kunjungan',array('siap_pulang'=>1,"alasan_pulang"=>$alasan));
     $this->session->set_flashdata('notif',$this->Notif->berhasil("Pasien Telah Siap Di Pulangkan!!!"));
     redirect(base_url()."Ranap");
   }
   public function bataL_pulang($id=null){
     $this->db->where('no_urutkunjungan',$id);
-    $this->db->update('kunjungan',array('siap_pulang'=>0));
+    $this->db->update('kunjungan',array('siap_pulang'=>0,"alasan_pulang"=>NULL));
     $this->session->set_flashdata('notif',$this->Notif->berhasil("Pasien Telah Dibatalkan Pulang!!!"));
     redirect(base_url()."Ranap");
   }
